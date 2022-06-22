@@ -165,6 +165,9 @@
     <Compile Include="EF\ApiUser.cs">
       <DependentUpon>GoldinAutoDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\Customer.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\GoldinAutoDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -179,6 +182,21 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GoldinAutoDB.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Order.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Order_Products.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Product.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ShoppingCart.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Supplier.cs">
+      <DependentUpon>GoldinAutoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -243,6 +261,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SQL\20220622.txt" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

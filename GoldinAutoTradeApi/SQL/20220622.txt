@@ -1,0 +1,151 @@
+﻿USE [C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTRADEAPI\APP_DATA\GOLDINAUTO.MDF]
+GO
+/****** Object:  Table [dbo].[ApiUser]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ApiUser](
+	[ID] [int] NULL,
+	[Username] [varchar](50) NULL,
+	[Password] [varchar](50) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Customer]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Customer](
+	[CID] [int] IDENTITY(1,1) NOT NULL,
+	[FirstName] [varchar](50) NULL,
+	[LastName] [varchar](50) NULL,
+	[Telephone] [varchar](50) NULL,
+	[Address1] [varchar](150) NULL,
+	[Address2] [varchar](150) NULL,
+	[Address3] [varchar](150) NULL,
+	[Address4] [varchar](150) NULL,
+	[CardType] [varchar](50) NULL,
+	[CardNumber] [varchar](150) NULL,
+	[ExpiryDate] [datetime] NULL,
+	[Email] [varchar](50) NULL,
+ CONSTRAINT [PK_Customer] PRIMARY KEY CLUSTERED 
+(
+	[CID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Order]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Order](
+	[OID] [int] IDENTITY(1,1) NOT NULL,
+	[OrderDate] [datetime] NULL,
+	[DeliveryDate] [datetime] NULL,
+	[CID] [int] NULL,
+ CONSTRAINT [PK_Order] PRIMARY KEY CLUSTERED 
+(
+	[OID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Order_Products]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Order_Products](
+	[OID] [int] NOT NULL,
+	[PID] [int] NOT NULL,
+	[Quantity] [int] NULL,
+	[TotalPrice] [decimal](18, 0) NULL
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Product]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Product](
+	[PID] [int] IDENTITY(1,1) NOT NULL,
+	[ProductName] [varchar](50) NULL,
+	[Brand] [varchar](20) NULL,
+	[UnitPrice] [decimal](18, 0) NULL,
+	[UnitsInStock] [int] NULL,
+	[Category] [varchar](50) NULL,
+	[Description] [varchar](500) NULL,
+	[SID] [int] NULL,
+	[ROL] [int] NULL,
+ CONSTRAINT [PK_Product] PRIMARY KEY CLUSTERED 
+(
+	[PID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[ShoppingCart]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[ShoppingCart](
+	[SCID] [int] IDENTITY(1,1) NOT NULL,
+	[PID] [int] NULL,
+	[ProductName] [varchar](50) NULL,
+	[UnitPrice] [decimal](18, 0) NULL,
+	[Quantity] [int] NULL,
+ CONSTRAINT [PK_ShoppingCart] PRIMARY KEY CLUSTERED 
+(
+	[SCID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[Supplier]    Script Date: 2022/06/22 18:55:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Supplier](
+	[SID] [int] IDENTITY(1,1) NOT NULL,
+	[SupplierName] [varchar](150) NULL,
+	[Telephone] [varchar](50) NULL,
+	[Email] [varchar](50) NULL,
+	[Address1] [varchar](150) NULL,
+	[Address2] [varchar](150) NULL,
+	[Address3] [varchar](150) NULL,
+	[Address4] [varchar](150) NULL,
+ CONSTRAINT [PK_Supplier] PRIMARY KEY CLUSTERED 
+(
+	[SID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+INSERT [dbo].[ApiUser] ([ID], [Username], [Password]) VALUES (1, N'GoldinAPI', N'GoldinAPI')
+GO
+/****** Object:  Index [IX_Order_Products]    Script Date: 2022/06/22 18:55:43 ******/
+ALTER TABLE [dbo].[Order_Products] ADD  CONSTRAINT [IX_Order_Products] UNIQUE NONCLUSTERED 
+(
+	[PID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, SORT_IN_TEMPDB = OFF, IGNORE_DUP_KEY = OFF, ONLINE = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[Order]  WITH CHECK ADD  CONSTRAINT [FK_Order_Customer] FOREIGN KEY([CID])
+REFERENCES [dbo].[Customer] ([CID])
+GO
+ALTER TABLE [dbo].[Order] CHECK CONSTRAINT [FK_Order_Customer]
+GO
+ALTER TABLE [dbo].[Order_Products]  WITH CHECK ADD  CONSTRAINT [FK_Order_Products_Order] FOREIGN KEY([OID])
+REFERENCES [dbo].[Order] ([OID])
+GO
+ALTER TABLE [dbo].[Order_Products] CHECK CONSTRAINT [FK_Order_Products_Order]
+GO
+ALTER TABLE [dbo].[Order_Products]  WITH CHECK ADD  CONSTRAINT [FK_Order_Products_Product] FOREIGN KEY([PID])
+REFERENCES [dbo].[Product] ([PID])
+GO
+ALTER TABLE [dbo].[Order_Products] CHECK CONSTRAINT [FK_Order_Products_Product]
+GO
+ALTER TABLE [dbo].[Product]  WITH CHECK ADD  CONSTRAINT [FK_Product_Supplier] FOREIGN KEY([SID])
+REFERENCES [dbo].[Supplier] ([SID])
+GO
+ALTER TABLE [dbo].[Product] CHECK CONSTRAINT [FK_Product_Supplier]
+GO
