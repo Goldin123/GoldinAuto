@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32421.90
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldinAutoTrade", "GoldinAutoTrade\GoldinAutoTrade.csproj", "{D736D806-B7C4-4619-B566-04D027EDDF0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldinAutoTradeApi", "GoldinAutoTradeApi\GoldinAutoTradeApi.csproj", "{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D736D806-B7C4-4619-B566-04D027EDDF0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D736D806-B7C4-4619-B566-04D027EDDF0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D736D806-B7C4-4619-B566-04D027EDDF0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D736D806-B7C4-4619-B566-04D027EDDF0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {800B5D0D-983D-4AA7-A18A-24CABCF8BA01}
+	EndGlobalSection
+EndGlobal
