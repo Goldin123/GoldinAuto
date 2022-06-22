@@ -6,6 +6,16 @@
     <edmx:Diagrams>
       <Diagram DiagramId="cc2b1fd7fbe24b72bcbc01980817b56e" Name="Diagram1" >
         <EntityTypeShape EntityType="GoldinAutoModel.ApiUser" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Customer" Width="1.5" PointX="3.75" PointY="5.75" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Order" Width="1.5" PointX="6" PointY="6.5" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Product" Width="1.5" PointX="6" PointY="1" />
+        <EntityTypeShape EntityType="GoldinAutoModel.ShoppingCart" Width="1.5" PointX="0.75" PointY="3.75" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Supplier" Width="1.5" PointX="3.75" PointY="1.125" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Order_Products" Width="1.5" PointX="8.25" PointY="1.5" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Order_Customer" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Order_Products_Order" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Order_Products_Product" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Product_Supplier" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
