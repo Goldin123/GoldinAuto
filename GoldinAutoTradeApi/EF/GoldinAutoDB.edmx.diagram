@@ -5,7 +5,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="cc2b1fd7fbe24b72bcbc01980817b56e" Name="Diagram1" >
-        <EntityTypeShape EntityType="GoldinAutoModel.ApiUser" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="GoldinAutoModel.Customer" Width="1.5" PointX="3.75" PointY="5.75" />
         <EntityTypeShape EntityType="GoldinAutoModel.Order" Width="1.5" PointX="6" PointY="6.5" />
         <EntityTypeShape EntityType="GoldinAutoModel.Product" Width="1.5" PointX="6" PointY="1" />
@@ -16,6 +15,7 @@
         <AssociationConnector Association="GoldinAutoModel.FK_Order_Products_Order" />
         <AssociationConnector Association="GoldinAutoModel.FK_Order_Products_Product" />
         <AssociationConnector Association="GoldinAutoModel.FK_Product_Supplier" />
+        <EntityTypeShape EntityType="GoldinAutoModel.ApiUser" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

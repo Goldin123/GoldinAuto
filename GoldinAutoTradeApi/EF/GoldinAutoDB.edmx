@@ -5,13 +5,14 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="GoldinAutoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <!--Errors Found During Generation:
-warning 6013: The table/view 'C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTRADEAPI\APP_DATA\GOLDINAUTO.MDF.dbo.ApiUser' does not have a primary key defined and no valid primary key could be inferred. This table/view has been excluded. To use the entity, you will need to review your schema, add the correct keys, and uncomment it.
         <EntityType Name="ApiUser">
-          <Property Name="ID" Type="int" />
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="50" />
           <Property Name="Password" Type="varchar" MaxLength="50" />
-        </EntityType>-->
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CID" />
@@ -136,6 +137,7 @@ warning 6002: The table/view 'C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTR
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="GoldinAutoModelStoreContainer">
+          <EntitySet Name="ApiUser" EntityType="Self.ApiUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
@@ -171,7 +173,6 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
     <edmx:ConceptualModels>
       <Schema Namespace="GoldinAutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GoldinAutoEntities" annotation:LazyLoadingEnabled="true" >
-          <EntitySet Name="ApiUsers" EntityType="GoldinAutoModel.ApiUser" />
           <EntitySet Name="Customers" EntityType="GoldinAutoModel.Customer" />
           <EntitySet Name="Orders" EntityType="GoldinAutoModel.Order" />
           <EntitySet Name="Products" EntityType="GoldinAutoModel.Product" />
@@ -194,15 +195,8 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="ApiUsers" EntityType="GoldinAutoModel.ApiUser" />
         </EntityContainer>
-        <EntityType Name="ApiUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CID" />
@@ -332,6 +326,14 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ApiUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -413,6 +415,15 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="PID" ColumnName="PID" />
                 <ScalarProperty Name="OID" ColumnName="OID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ApiUsers">
+            <EntityTypeMapping TypeName="GoldinAutoModel.ApiUser">
+              <MappingFragment StoreEntitySet="ApiUser">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
