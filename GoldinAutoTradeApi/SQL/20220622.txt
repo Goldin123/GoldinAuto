@@ -1,17 +1,21 @@
 ﻿USE [C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTRADEAPI\APP_DATA\GOLDINAUTO.MDF]
 GO
-/****** Object:  Table [dbo].[ApiUser]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[ApiUser]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[ApiUser](
-	[ID] [int] NULL,
+	[ID] [int] IDENTITY(1,1) NOT NULL,
 	[Username] [varchar](50) NULL,
-	[Password] [varchar](50) NULL
+	[Password] [varchar](50) NULL,
+ CONSTRAINT [PK_ApiUser] PRIMARY KEY CLUSTERED 
+(
+	[ID] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Customer]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[Customer]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -35,7 +39,7 @@ CREATE TABLE [dbo].[Customer](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Order]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[Order]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -51,7 +55,7 @@ CREATE TABLE [dbo].[Order](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Order_Products]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[Order_Products]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -63,7 +67,7 @@ CREATE TABLE [dbo].[Order_Products](
 	[TotalPrice] [decimal](18, 0) NULL
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Product]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[Product]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -84,7 +88,7 @@ CREATE TABLE [dbo].[Product](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[ShoppingCart]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[ShoppingCart]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -101,7 +105,7 @@ CREATE TABLE [dbo].[ShoppingCart](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[Supplier]    Script Date: 2022/06/22 18:55:43 ******/
+/****** Object:  Table [dbo].[Supplier]    Script Date: 2022/06/22 19:39:10 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
@@ -121,9 +125,29 @@ CREATE TABLE [dbo].[Supplier](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
+SET IDENTITY_INSERT [dbo].[ApiUser] ON 
+GO
 INSERT [dbo].[ApiUser] ([ID], [Username], [Password]) VALUES (1, N'GoldinAPI', N'GoldinAPI')
 GO
-/****** Object:  Index [IX_Order_Products]    Script Date: 2022/06/22 18:55:43 ******/
+SET IDENTITY_INSERT [dbo].[ApiUser] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Product] ON 
+GO
+INSERT [dbo].[Product] ([PID], [ProductName], [Brand], [UnitPrice], [UnitsInStock], [Category], [Description], [SID], [ROL]) VALUES (1, N'Headlights', N'Samsung', CAST(126 AS Decimal(18, 0)), 45, N'Car Lights', N'300C Xenon light', 1, 1)
+GO
+INSERT [dbo].[Product] ([PID], [ProductName], [Brand], [UnitPrice], [UnitsInStock], [Category], [Description], [SID], [ROL]) VALUES (2, N'Wiper Blades', N'Audi', CAST(53 AS Decimal(18, 0)), 20, N'Car Widow', N'Mega Wipers', 1, 1)
+GO
+INSERT [dbo].[Product] ([PID], [ProductName], [Brand], [UnitPrice], [UnitsInStock], [Category], [Description], [SID], [ROL]) VALUES (3, N'Tyres', N'Goodyear', CAST(34 AS Decimal(18, 0)), 10, N'Tyes', N'17 inch Low Profile', 1, 1)
+GO
+SET IDENTITY_INSERT [dbo].[Product] OFF
+GO
+SET IDENTITY_INSERT [dbo].[Supplier] ON 
+GO
+INSERT [dbo].[Supplier] ([SID], [SupplierName], [Telephone], [Email], [Address1], [Address2], [Address3], [Address4]) VALUES (1, N'ABC Suppliers', N'0113364867', N'admin@abcsup.com', N'1 street', N'2 steet', N'3 street', N'4 street')
+GO
+SET IDENTITY_INSERT [dbo].[Supplier] OFF
+GO
+/****** Object:  Index [IX_Order_Products]    Script Date: 2022/06/22 19:39:10 ******/
 ALTER TABLE [dbo].[Order_Products] ADD  CONSTRAINT [IX_Order_Products] UNIQUE NONCLUSTERED 
 (
 	[PID] ASC
