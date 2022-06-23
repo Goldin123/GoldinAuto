@@ -7,6 +7,21 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldinAutoTrade", "GoldinAu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoldinAutoTradeApi", "GoldinAutoTradeApi\GoldinAutoTradeApi.csproj", "{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{2CCA2187-BD2E-4AEA-B1F2-4B64E3403474}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{D977CA4F-BB47-4FF3-B345-38A57944D524}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Model", "Model", "{53F1C81E-699A-41B3-B6D3-59F16DA59D6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{24187176-39B3-4D89-84FA-4D3557DF00CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GlodinAutoTradeModel", "GlodinAutoTradeModel\GlodinAutoTradeModel.csproj", "{A0C9CE86-7204-418E-9320-08EEB3951FF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL", "SQL", "{29F0D3C3-79BE-4A49-93CF-9506D94301E4}"
+	ProjectSection(SolutionItems) = preProject
+		GoldinAutoTradeApi\SQL\Run Me First.txt = GoldinAutoTradeApi\SQL\Run Me First.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,9 +36,19 @@ Global
 		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0C9CE86-7204-418E-9320-08EEB3951FF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0C9CE86-7204-418E-9320-08EEB3951FF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0C9CE86-7204-418E-9320-08EEB3951FF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0C9CE86-7204-418E-9320-08EEB3951FF2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D736D806-B7C4-4619-B566-04D027EDDF0F} = {D977CA4F-BB47-4FF3-B345-38A57944D524}
+		{6C938A6B-FAC7-439F-B39A-AA0998FC3A40} = {2CCA2187-BD2E-4AEA-B1F2-4B64E3403474}
+		{A0C9CE86-7204-418E-9320-08EEB3951FF2} = {53F1C81E-699A-41B3-B6D3-59F16DA59D6A}
+		{29F0D3C3-79BE-4A49-93CF-9506D94301E4} = {24187176-39B3-4D89-84FA-4D3557DF00CF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {800B5D0D-983D-4AA7-A18A-24CABCF8BA01}

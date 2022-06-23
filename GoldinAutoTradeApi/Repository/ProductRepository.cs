@@ -1,5 +1,5 @@
-﻿using GoldinAutoTradeApi.Inteface;
-using GoldinAutoTradeApi.Models;
+﻿using GlodinAutoTradeModel.Models;
+using GoldinAutoTradeApi.Inteface;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +16,7 @@ namespace GoldinAutoTradeApi.Repository
                 using (var context = new EF.GoldinAutoEntities())
                 {
                     return (from a in context.Products
-                            select new Models.Product { 
+                            select new Product { 
                                 PID  = a.PID,
                                 Brand = a.Brand,
                                 Category = a.Category,
@@ -24,7 +24,7 @@ namespace GoldinAutoTradeApi.Repository
                                ProductName = a.ProductName, 
                                UnitPrice  = (decimal)a.UnitPrice,
                                UnitsInStock = (int)a.UnitsInStock
-                            }).ToList<Models.Product>();
+                            }).ToList<Product>();
                 }
 
             }
