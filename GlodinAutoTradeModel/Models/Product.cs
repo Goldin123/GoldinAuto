@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace GoldinAutoTradeApi.Models
+namespace GlodinAutoTradeModel.Models
 {
+
     public class Product
     {
         public int PID { get; set; }
@@ -15,4 +17,5 @@ namespace GoldinAutoTradeApi.Models
         public string Category { get; set; }
         public string Description { get; set; }
     }
+
 }

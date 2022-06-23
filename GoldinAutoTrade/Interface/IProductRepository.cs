@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GoldinAutoTradeApi.Inteface
+namespace GoldinAutoTrade.Interface
 {
     internal interface IProductRepository
     {
-        List<Product> GetProducts();
+        Task<Tuple<List<Product>, bool>> GetProducts();
     }
 }
