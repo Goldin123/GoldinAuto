@@ -1,0 +1,63 @@
+﻿@model List<GlodinAutoTradeModel.Models.ShoppingCart>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Shopping Cart</h2>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Available Shopping Items</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.ProductName
+                                            </td>
+                                            <td>@item.UnitPrice</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@String.Format("{0:c}", (item.Quantity * item.UnitPrice))</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="4">Cart is empty.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="card-footer">
+                        @if (Model.Count > 0)
+                        {
+                            @Html.ActionLink("Countinue", "Purchase", "Shopping", null, new { @class = "btn btn-primary" })
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

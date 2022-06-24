@@ -39,13 +39,11 @@
           <Property Name="DeliveryDate" Type="datetime" />
           <Property Name="CID" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTRADEAPI\APP_DATA\GOLDINAUTO.MDF.dbo.Order_Products' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Order_Products">
           <Key>
-            <PropertyRef Name="OID" />
-            <PropertyRef Name="PID" />
+            <PropertyRef Name="OPID" />
           </Key>
+          <Property Name="OPID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="OID" Type="int" Nullable="false" />
           <Property Name="PID" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="int" />
@@ -70,6 +68,7 @@ warning 6002: The table/view 'C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTR
             <PropertyRef Name="SCID" />
           </Key>
           <Property Name="SCID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CID" Type="int" />
           <Property Name="PID" Type="int" />
           <Property Name="ProductName" Type="varchar" MaxLength="50" />
           <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="0" />
@@ -140,17 +139,10 @@ warning 6002: The table/view 'C:\WS\GOLDINAUTOTRADE\GOLDINAUTOTRADE\GOLDINAUTOTR
           <EntitySet Name="ApiUser" EntityType="Self.ApiUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_Products" EntityType="Self.Order_Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Supplier" EntityType="Self.Supplier" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Order_Products" EntityType="Self.Order_Products" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-[Order_Products].[OID] AS [OID], 
-[Order_Products].[PID] AS [PID], 
-[Order_Products].[Quantity] AS [Quantity], 
-[Order_Products].[TotalPrice] AS [TotalPrice]
-FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Order" EntitySet="Order" />
@@ -173,12 +165,13 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
     <edmx:ConceptualModels>
       <Schema Namespace="GoldinAutoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="GoldinAutoEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="ApiUsers" EntityType="GoldinAutoModel.ApiUser" />
           <EntitySet Name="Customers" EntityType="GoldinAutoModel.Customer" />
           <EntitySet Name="Orders" EntityType="GoldinAutoModel.Order" />
+          <EntitySet Name="Order_Products" EntityType="GoldinAutoModel.Order_Products" />
           <EntitySet Name="Products" EntityType="GoldinAutoModel.Product" />
           <EntitySet Name="ShoppingCarts" EntityType="GoldinAutoModel.ShoppingCart" />
           <EntitySet Name="Suppliers" EntityType="GoldinAutoModel.Supplier" />
-          <EntitySet Name="Order_Products" EntityType="GoldinAutoModel.Order_Products" />
           <AssociationSet Name="FK_Order_Customer" Association="GoldinAutoModel.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
@@ -195,8 +188,15 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <EntitySet Name="ApiUsers" EntityType="GoldinAutoModel.ApiUser" />
         </EntityContainer>
+        <EntityType Name="ApiUser">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="CID" />
@@ -226,6 +226,18 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
           <NavigationProperty Name="Customer" Relationship="GoldinAutoModel.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="Order_Products" Relationship="GoldinAutoModel.FK_Order_Products_Order" FromRole="Order" ToRole="Order_Products" />
         </EntityType>
+        <EntityType Name="Order_Products">
+          <Key>
+            <PropertyRef Name="OPID" />
+          </Key>
+          <Property Name="OPID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OID" Type="Int32" Nullable="false" />
+          <Property Name="PID" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Order" Relationship="GoldinAutoModel.FK_Order_Products_Order" FromRole="Order_Products" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="GoldinAutoModel.FK_Order_Products_Product" FromRole="Order_Products" ToRole="Product" />
+        </EntityType>
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="PID" />
@@ -247,6 +259,7 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
             <PropertyRef Name="SCID" />
           </Key>
           <Property Name="SCID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CID" Type="Int32" />
           <Property Name="PID" Type="Int32" />
           <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" />
@@ -265,18 +278,6 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
           <Property Name="Address3" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <Property Name="Address4" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Products" Relationship="GoldinAutoModel.FK_Product_Supplier" FromRole="Supplier" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Order_Products">
-          <Key>
-            <PropertyRef Name="OID" />
-            <PropertyRef Name="PID" />
-          </Key>
-          <Property Name="OID" Type="Int32" Nullable="false" />
-          <Property Name="PID" Type="Int32" Nullable="false" />
-          <Property Name="Quantity" Type="Int32" />
-          <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
-          <NavigationProperty Name="Order" Relationship="GoldinAutoModel.FK_Order_Products_Order" FromRole="Order_Products" ToRole="Order" />
-          <NavigationProperty Name="Product" Relationship="GoldinAutoModel.FK_Order_Products_Product" FromRole="Order_Products" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Order_Customer">
           <End Type="GoldinAutoModel.Customer" Role="Customer" Multiplicity="0..1" />
@@ -326,21 +327,22 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ApiUser">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-        </EntityType>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="GoldinAutoModelStoreContainer" CdmEntityContainer="GoldinAutoEntities" >
-        <EntitySetMapping Name="Customers">
+          <EntitySetMapping Name="ApiUsers">
+            <EntityTypeMapping TypeName="GoldinAutoModel.ApiUser">
+              <MappingFragment StoreEntitySet="ApiUser">
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="GoldinAutoModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
                 <ScalarProperty Name="Email" ColumnName="Email" />
@@ -368,6 +370,17 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Order_Products">
+            <EntityTypeMapping TypeName="GoldinAutoModel.Order_Products">
+              <MappingFragment StoreEntitySet="Order_Products">
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="OID" ColumnName="OID" />
+                <ScalarProperty Name="OPID" ColumnName="OPID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="GoldinAutoModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -390,6 +403,7 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="PID" ColumnName="PID" />
+                <ScalarProperty Name="CID" ColumnName="CID" />
                 <ScalarProperty Name="SCID" ColumnName="SCID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -405,25 +419,6 @@ FROM [dbo].[Order_Products] AS [Order_Products]</DefiningQuery>
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SID" ColumnName="SID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Order_Products">
-            <EntityTypeMapping TypeName="GoldinAutoModel.Order_Products">
-              <MappingFragment StoreEntitySet="Order_Products">
-                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-                <ScalarProperty Name="OID" ColumnName="OID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ApiUsers">
-            <EntityTypeMapping TypeName="GoldinAutoModel.ApiUser">
-              <MappingFragment StoreEntitySet="ApiUser">
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="Username" ColumnName="Username" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

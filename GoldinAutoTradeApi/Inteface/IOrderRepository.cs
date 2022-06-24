@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTradeApi.Inteface
 {
-    internal interface IProductRepository
+    internal interface IOrderRepository
     {
-        List<Product> GetProducts();
+        Order AddOrder(int CID);
+        OrderProducts AddOrderProduct(OrderProducts orderedProduct);
 
-        Product GetProduct(int id);
-        Product UpdateProductInStock(int id);
+        List<OrderHistory> GetOrderHistory();
     }
 }

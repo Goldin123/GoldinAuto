@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTradeApi.Inteface
 {
-    internal interface IProductRepository
+    internal interface ICustomerRepository
     {
-        List<Product> GetProducts();
-
-        Product GetProduct(int id);
-        Product UpdateProductInStock(int id);
+        Customer AddEditCustomer(Customer customer);
+        Customer GetCustomer(string email);
     }
 }
