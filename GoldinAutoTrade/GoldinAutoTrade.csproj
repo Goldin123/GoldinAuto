@@ -2271,6 +2271,7 @@
     <Content Include="Views\Shopping\Index.cshtml" />
     <Content Include="Views\Shopping\Success.cshtml" />
     <Content Include="Views\Shopping\OrderHistory.cshtml" />
+    <Content Include="Views\Shared\_ShoppingCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

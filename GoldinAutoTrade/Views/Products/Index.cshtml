@@ -31,28 +31,7 @@
                             <tbody>
                                 @foreach (var item in Model)
                                 {
-                                    <tr>
-                                        <td>@item.ProductName</td>
-                                        <td>@item.Description</td>
-                                        <td>@item.Brand</td>
-                                        <td>@item.Category</td>
-                                        <td>
-                                            @item.UnitsInStock
-                                            @if (item.UnitsInStock > 1)
-                                            {
-                                                <text>units</text>
-                                            }
-                                            else
-                                            {
-                                                <text>unit</text>
-                                            }
-                                        </td>
-                                        <td>@String.Format("{0:c}", item.UnitPrice)</td>
-                                        <td>
-                                            @Html.ActionLink("add to cart", "AddToCart", "Product", new { id = item.PID }, new { @class = "btn btn-primary" })
-                                        </td>
-                                    </tr>
-
+                                    @Html.Partial("_ShoppingCart", item);
 
                                 }
                                

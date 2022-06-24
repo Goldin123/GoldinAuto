@@ -39,7 +39,7 @@ namespace GoldinAutoTrade.Controllers
                 Order order = new Order();
                 List<ShoppingCart> shoppingCartItems = new List<ShoppingCart>();
                 var getCustomer = await customerRepository.GetCustomer(email);
-                if (getCustomer != null)                 
+                if (getCustomer.Item1 != null)                 
                 {
                     customer = getCustomer.Item1;
 
@@ -51,7 +51,7 @@ namespace GoldinAutoTrade.Controllers
                     customer.LastName = names[1];
                     customer.Email = email;
                     var addCustomer = await customerRepository.AddEditCustomer(customer);
-                    if (addCustomer != null)                     
+                    if (addCustomer.Item1 != null)                     
                     {
                         customer = addCustomer.Item1;
                     }
@@ -93,7 +93,7 @@ namespace GoldinAutoTrade.Controllers
                 }
             }
 
-            return View("Success");
+            return RedirectToAction("Success");
         }
 
         [Authorize]

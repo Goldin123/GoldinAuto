@@ -1,0 +1,29 @@
+﻿@model GlodinAutoTradeModel.Models.Product
+
+@using (Html.BeginForm("AddToCart", "Products", FormMethod.Post))
+{
+    @Html.AntiForgeryToken();
+
+    <tr>
+        <td>@Model.ProductName</td>
+        <td>@Model.Description</td>
+        <td>@Model.Brand</td>
+        <td>@Model.Category</td>
+        <td>
+            @Model.UnitsInStock
+            @if (Model.UnitsInStock > 1)
+            {
+                <text>units</text>
+            }
+            else
+            {
+                <text>unit</text>
+            }
+        </td>
+        <td>@String.Format("{0:c}", Model.UnitPrice)</td>
+        <td>
+            @Html.HiddenFor(m => m.PID, new { @Value = Model.PID })
+            <button class="btn btn-primary" type="submit">add to cart</button>
+        </td>
+    </tr>
+}

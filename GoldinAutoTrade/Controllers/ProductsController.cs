@@ -18,7 +18,7 @@ namespace GoldinAutoTrade.Controllers
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var products  = await  productRepository.GetProducts();
+            var products = await productRepository.GetProducts();
             if (products != null)
                 if (products.Item2)
                     return View(products.Item1);
@@ -26,18 +26,21 @@ namespace GoldinAutoTrade.Controllers
             return View(new List<Product>());
         }
 
+        [HttpPost]
         [Authorize]
-        private async void addToCart(int id)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddToCart(Product products)
         {
+            //int ID = Convert.ToInt32(id);
             var cart = new ShoppingCart();
-            var getProduct = await productRepository.GetProduct(id);
+            var getProduct = await productRepository.GetProduct(products.PID);
             if (getProduct != null)
             {
                 Product product = getProduct.Item1;
                 if (product != null && product.UnitsInStock > 0)
                 {
-                    var getProductInBag = await shoppingCartRepository.GetProductInBag(id);
-                    if (getProductInBag != null)
+                    var getProductInBag = await shoppingCartRepository.GetProductInBag(products.PID);
+                    if (getProductInBag.Item1 != null)
                     {
                         cart = getProductInBag.Item1;
                     }
@@ -47,18 +50,21 @@ namespace GoldinAutoTrade.Controllers
                         cart.PID = product.PID;
                         cart.UnitPrice = (double)product.UnitPrice;
                         cart.Quantity = 1;
+                        cart.CID = 1;
                     }
                     var addUpdateCart = await shoppingCartRepository.AddToCart(cart);
                     if(addUpdateCart != null) 
                     {
                         if (addUpdateCart.Item1) 
                         {
-                            var updateProduct = await productRepository.UpdateProductInStock(id);
+                            var updateProduct = await productRepository.UpdateProductInStock(products.PID);
                         }
                     }
                    
                 }
             }
+
+            return RedirectToAction("Index");
         }
     }
 }
