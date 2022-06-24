@@ -26,5 +26,35 @@ namespace GoldinAutoTradeApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [Route("api/Product/GetProduct")]
+        [HttpGet]
+        public IHttpActionResult GetProduct(int Id)
+        {
+            try
+            {
+                var product = productRepository.GetProduct(Id);
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/Product/UpdateProductInStock")]
+        [HttpGet]
+        public IHttpActionResult UpdateProductInStock(int Id)
+        {
+            try
+            {
+                var product = productRepository.UpdateProductInStock(Id);
+                return Ok(product);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
     }
 }

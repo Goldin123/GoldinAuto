@@ -13,7 +13,9 @@ namespace GoldinAutoTrade.Controllers
     public class ProductsController : Controller
     {
         IProductRepository productRepository = new ProductRepository();
+        IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
         // GET: Products
+        [Authorize]
         public async Task<ActionResult> Index()
         {
             var products  = await  productRepository.GetProducts();
@@ -22,6 +24,41 @@ namespace GoldinAutoTrade.Controllers
                     return View(products.Item1);
 
             return View(new List<Product>());
+        }
+
+        [Authorize]
+        private async void addToCart(int id)
+        {
+            var cart = new ShoppingCart();
+            var getProduct = await productRepository.GetProduct(id);
+            if (getProduct != null)
+            {
+                Product product = getProduct.Item1;
+                if (product != null && product.UnitsInStock > 0)
+                {
+                    var getProductInBag = await shoppingCartRepository.GetProductInBag(id);
+                    if (getProductInBag != null)
+                    {
+                        cart = getProductInBag.Item1;
+                    }
+                    else
+                    {
+                        cart.ProductName = product.ProductName;
+                        cart.PID = product.PID;
+                        cart.UnitPrice = (double)product.UnitPrice;
+                        cart.Quantity = 1;
+                    }
+                    var addUpdateCart = await shoppingCartRepository.AddToCart(cart);
+                    if(addUpdateCart != null) 
+                    {
+                        if (addUpdateCart.Item1) 
+                        {
+                            var updateProduct = await productRepository.UpdateProductInStock(id);
+                        }
+                    }
+                   
+                }
+            }
         }
     }
 }

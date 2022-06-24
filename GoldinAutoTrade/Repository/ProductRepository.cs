@@ -13,6 +13,29 @@ namespace GoldinAutoTrade.Repository
     public class ProductRepository : IProductRepository
     {
         private readonly HttpClient client = Helper.ApiHttpClient.GetApiClient();
+
+        async Task<Tuple<Product>> IProductRepository.GetProduct(int Id)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"api/Product/GetProduct?Id={Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var product = JsonConvert.DeserializeObject<Product>(content);
+                        return new Tuple<Product>(product);
+                    }
+                }
+                return new Tuple<Product>(new Product());
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<Product>(new Product());
+            }
+        }
+
         async Task<Tuple<List<Product>, bool>> IProductRepository.GetProducts()
         {
             try
@@ -31,7 +54,29 @@ namespace GoldinAutoTrade.Repository
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new Tuple<List<Product>, bool>(new List<Product>(), false);
+            }
+        }
+
+        async Task<Tuple<Product>> IProductRepository.UpdateProductInStock(int Id)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.GetAsync($"api/Product/UpdateProductInStock?Id={Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var product = JsonConvert.DeserializeObject<Product>(content);
+                        return new Tuple<Product>(product);
+                    }
+                }
+                return new Tuple<Product>(new Product());
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<Product>(new Product());
             }
         }
     }

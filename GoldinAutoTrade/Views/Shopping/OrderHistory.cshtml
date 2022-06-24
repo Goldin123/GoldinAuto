@@ -1,0 +1,56 @@
+﻿@model List<GlodinAutoTradeModel.Models.OrderHistory>
+@{
+    ViewBag.Title = "OrderHistory";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+}
+
+<h2>Order History</h2>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Order History</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Order Date</th>
+                                    <th>Product Name</th>                                    
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th>Delivery Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Count > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @item.OrderDate
+                                            </td>
+                                            <td>@item.ProductName</td>
+                                            <td>@item.Quantity</td>
+                                            <td>@String.Format("{0:c}", (item.TotalPrice))</td>
+                                            <td>@item.DeliveryDate</td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="5">No order history.</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

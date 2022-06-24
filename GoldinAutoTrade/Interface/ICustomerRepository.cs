@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTrade.Interface
 {
-    internal interface IProductRepository
+    internal interface ICustomerRepository
     {
-        Task<Tuple<List<Product>, bool>> GetProducts();
+        Task<Tuple<Customer>> AddEditCustomer(Customer customer);
 
-        Task<Tuple<Product>> GetProduct(int Id);
+        Task<Tuple<Customer>> GetCustomer(string email);
 
-        Task<Tuple<Product>> UpdateProductInStock(int Id);
     }
 }

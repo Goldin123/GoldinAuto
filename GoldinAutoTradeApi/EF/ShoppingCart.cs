@@ -15,6 +15,7 @@ namespace GoldinAutoTradeApi.EF
     public partial class ShoppingCart
     {
         public int SCID { get; set; }
+        public Nullable<int> CID { get; set; }
         public Nullable<int> PID { get; set; }
         public string ProductName { get; set; }
         public Nullable<decimal> UnitPrice { get; set; }

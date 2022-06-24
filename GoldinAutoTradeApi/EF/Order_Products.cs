@@ -14,6 +14,7 @@ namespace GoldinAutoTradeApi.EF
     
     public partial class Order_Products
     {
+        public int OPID { get; set; }
         public int OID { get; set; }
         public int PID { get; set; }
         public Nullable<int> Quantity { get; set; }
