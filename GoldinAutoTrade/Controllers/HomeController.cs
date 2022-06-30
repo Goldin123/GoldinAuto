@@ -1,6 +1,10 @@
-﻿using System;
+﻿using GlodinAutoTradeModel.Models;
+using GoldinAutoTrade.Interface;
+using GoldinAutoTrade.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -8,22 +12,16 @@ namespace GoldinAutoTrade.Controllers
 {
     public class HomeController : Controller
     {
+        ICustomerRepository customerRepository = new CustomerRepository();
         [Authorize]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var userClaims = User.Identity as System.Security.Claims.ClaimsIdentity;
-
-            //You get the user's first and last name below:
-            ViewBag.Name = userClaims?.FindFirst("name")?.Value;
-
-            // The 'preferred_username' claim can be used for showing the username
-            ViewBag.Username = userClaims?.FindFirst("preferred_username")?.Value;
-
-            // The subject/ NameIdentifier claim can be used to uniquely identify the user across the web
-            ViewBag.Subject = userClaims?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-
-            // TenantId is the unique Tenant Id - which represents an organization in Azure AD
-            ViewBag.TenantId = userClaims?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid")?.Value;
+            await customerRepository.SetGlobalVariable(userClaims);
+            ViewBag.Name = Globals.Name;
+            ViewBag.Username = Globals.Email;
+            ViewBag.Subject = Globals.Subject;
+            ViewBag.TenantId = Globals.TenantId;
             
             return View();
         }

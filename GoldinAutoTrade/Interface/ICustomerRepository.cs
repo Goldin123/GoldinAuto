@@ -12,6 +12,7 @@ namespace GoldinAutoTrade.Interface
         Task<Tuple<Customer>> AddEditCustomer(Customer customer);
 
         Task<Tuple<Customer>> GetCustomer(string email);
+        Task<Tuple<bool>> SetGlobalVariable(System.Security.Claims.ClaimsIdentity claims);
 
     }
 }

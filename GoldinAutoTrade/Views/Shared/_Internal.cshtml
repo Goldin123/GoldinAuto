@@ -44,15 +44,23 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                     <div class="info">
-                        <p>@ViewBag.Name</p>
+                        <p>@GlodinAutoTradeModel.Models.Globals.Name</p>
                     </div>
                 </div>
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-
+                        <li class="nav-item">
+                            <a href="@Url.Action("Index","Customer")" class="nav-link">
+                                <i class="nav-icon fas fa-smile"></i>
+                                <p>
+                                    Profile
+                                    
+                                </p>
+                            </a>
+                        </li>
                         <li class="nav-item menu-open">
-                            <a href="#" class="nav-link active">
+                            <a href="@Url.Action("Index","Products")" class="nav-link active">
                                 <i class="nav-icon fas fa-list-alt"></i>
                                 <p>
                                     Products
@@ -61,13 +69,13 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li class="nav-item">
-                                    <a href="Products/Index" class="nav-link">
+                                    <a href="@Url.Action("Index","Products")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>View</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="./index2.html" class="nav-link">
+                                    <a href="@Url.Action("Add","Products")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add</p>
                                     </a>
@@ -76,7 +84,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a href="Shopping/Index" class="nav-link">
+                            <a href="@Url.Action("Index","Shopping")" class="nav-link">
                                 <i class="nav-icon fas fa-shopping-bag"></i>
                                 <p>
                                     Shopping Cart
@@ -85,7 +93,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="Shopping/OrderHistory" class="nav-link">
+                            <a href="@Url.Action("OrderHistory","Shopping")" class="nav-link">
                                 <i class="nav-icon fas fa-briefcase"></i>
                                 <p>
                                     Order History
@@ -94,7 +102,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/widgets.html" class="nav-link">
+                            <a href="@Url.Action("Index","Suppliers")" class="nav-link">
                                 <i class="nav-icon fas fa-th"></i>
                                 <p>
                                     Suppliers
@@ -103,7 +111,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="account/signout" class="nav-link">
+                            <a href="@Url.Action("signout","Account")" class="nav-link">
                                 <i class="nav-icon fas fa-bolt"></i>
                                 <p>
                                     Sign Out
@@ -144,8 +152,7 @@
         <!-- Main Footer -->
         <footer class="main-footer">
             <strong>Copyright &copy; 2022 </strong>
-            Goldin Auto Trade.
-
+            Goldin Auto Trade 2.0
         </footer>
     </div>
     <!-- ./wrapper -->
