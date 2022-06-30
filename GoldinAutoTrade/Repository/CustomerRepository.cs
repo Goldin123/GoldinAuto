@@ -44,7 +44,7 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<Customer>> ICustomerRepository.GetCustomer(string email)
+        private async Task<Tuple<Customer>> GetCustomer(string email)
         {
             try
             {
@@ -65,5 +65,26 @@ namespace GoldinAutoTrade.Repository
                 return new Tuple<Customer>(null);
             }
         }
+
+        async Task<Tuple<Customer>> ICustomerRepository.GetCustomer(string email)
+        {
+            return await GetCustomer(email);
+        }
+
+        async Task<Tuple<bool>> ICustomerRepository.SetGlobalVariable(System.Security.Claims.ClaimsIdentity claims)
+        {
+            Globals.Name = claims?.FindFirst("name")?.Value;
+            Globals.Email = claims?.FindFirst("preferred_username")?.Value;
+            Globals.Subject = claims?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            Globals.TenantId = claims?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid")?.Value;
+            var getCustomerDetails = await GetCustomer(Globals.Email);
+            if (getCustomerDetails.Item1 != null)
+                Globals.CID = getCustomerDetails.Item1.CID;
+
+            return new Tuple<bool>(true);
+        }
+
+
+
     }
 }

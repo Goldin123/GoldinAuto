@@ -31,10 +31,10 @@
 }
 else
 {
-    <span><br />Hello @System.Security.Claims.ClaimsPrincipal.Current.FindFirst("name").Value;</span>
+    <span><br />Hello @System.Security.Claims.ClaimsPrincipal.Current.FindFirst("name").Value</span>
     <br />
     <br />
-    @Html.ActionLink("See Your Claims", "Index", "Claims")
+    @Html.ActionLink("Continue shopping.", "Index", "Home")
     <br />
     <br />
     @Html.ActionLink("Sign out", "SignOut", "Account")
