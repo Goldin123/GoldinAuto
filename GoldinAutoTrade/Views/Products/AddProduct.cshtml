@@ -1,0 +1,80 @@
+﻿@model GlodinAutoTradeModel.Models.Product
+
+@{
+    ViewBag.Title = "AddProduct";
+    Layout = "~/Views/Shared/_Internal.cshtml";
+    var suppliers = (List<SelectListItem>)ViewBag.Suppliers;
+}
+
+<h2>Add Product &nbsp;&nbsp;</h2>
+<section class="content">
+    <div class="container-fluid">
+        @if (TempData["ProductSuccess"] != null)
+        {
+            var msg = TempData["ProductSuccess"].ToString();
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="far fa-thumbs-up"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">@msg</span>
+                </div>
+            </div>
+        }
+        <div class="row">
+            <div>
+                @using (Html.BeginForm("AddProductToInventory", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken();
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Product Details</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Product Name</label>
+                                @Html.TextBoxFor(m => m.ProductName, new { @class = "form-control", @placeholder = "Enter product name." })
+                                @Html.ValidationMessageFor(m => m.ProductName, null, new { @class = "text-danger" })
+                            </div>
+
+                            <div class="form-group">
+                                <label>Suppliers</label>
+                                @Html.DropDownListFor(a => a.SID, suppliers, new { @class = "custom-select", type = "text" })
+                            </div>
+                            <div class="form-group">
+                                <label>Brand</label>
+                                @Html.DropDownListFor(a => a.Brand, GlodinAutoTradeModel.DropDownItems.ProductBrand(), new { @class = "custom-select", type = "text" })
+                            </div>
+                            <div class="form-group">
+                                <label>Category</label>
+                                @Html.DropDownListFor(a => a.Category, GlodinAutoTradeModel.DropDownItems.ProductCategory(), new { @class = "custom-select", type = "text" })
+                            </div>
+                            <div class="form-group">
+                                <label>Product Image</label><br />
+                                <input type="file" id="Image" name="Image" />
+                                @Html.ValidationMessageFor(m => m.Image, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Units</label>
+                                @Html.TextBoxFor(m => m.UnitsInStock, new { @class = "form-control", @placeholder = "Enter product units.", @type = "number" })
+                                @Html.ValidationMessageFor(m => m.UnitsInStock, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Price</label>
+                                @Html.TextBoxFor(m => m.UnitPrice, new { @class = "form-control", @placeholder = "Enter product price.", @type = "number" })
+                                @Html.ValidationMessageFor(m => m.UnitPrice, null, new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label>Product Description</label>
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @placeholder = "Enter product description." })
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+

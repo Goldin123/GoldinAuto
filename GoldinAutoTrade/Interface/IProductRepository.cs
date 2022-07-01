@@ -14,5 +14,7 @@ namespace GoldinAutoTrade.Interface
         Task<Tuple<Product>> GetProduct(int Id);
 
         Task<Tuple<Product>> UpdateProductInStock(int Id);
+
+        Task<Tuple<bool>> AddProduct(Product product);
     }
 }

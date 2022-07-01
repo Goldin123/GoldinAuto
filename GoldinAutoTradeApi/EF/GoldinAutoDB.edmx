@@ -61,7 +61,8 @@
           <Property Name="Category" Type="varchar" MaxLength="50" />
           <Property Name="Description" Type="varchar" MaxLength="500" />
           <Property Name="SID" Type="int" />
-          <Property Name="ROL" Type="int" />
+          <Property Name="Image" Type="varbinary(max)" />
+          <Property Name="FileName" Type="varchar" MaxLength="1500" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -169,7 +170,6 @@
           <EntitySet Name="Customers" EntityType="GoldinAutoModel.Customer" />
           <EntitySet Name="Orders" EntityType="GoldinAutoModel.Order" />
           <EntitySet Name="Order_Products" EntityType="GoldinAutoModel.Order_Products" />
-          <EntitySet Name="Products" EntityType="GoldinAutoModel.Product" />
           <EntitySet Name="ShoppingCarts" EntityType="GoldinAutoModel.ShoppingCart" />
           <EntitySet Name="Suppliers" EntityType="GoldinAutoModel.Supplier" />
           <AssociationSet Name="FK_Order_Customer" Association="GoldinAutoModel.FK_Order_Customer">
@@ -180,6 +180,7 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="Order_Products" EntitySet="Order_Products" />
           </AssociationSet>
+          <EntitySet Name="Products" EntityType="GoldinAutoModel.Product" />
           <AssociationSet Name="FK_Order_Products_Product" Association="GoldinAutoModel.FK_Order_Products_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Order_Products" EntitySet="Order_Products" />
@@ -188,7 +189,7 @@
             <End Role="Supplier" EntitySet="Suppliers" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-        </EntityContainer>
+          </EntityContainer>
         <EntityType Name="ApiUser">
           <Key>
             <PropertyRef Name="ID" />
@@ -237,22 +238,6 @@
           <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="Order" Relationship="GoldinAutoModel.FK_Order_Products_Order" FromRole="Order_Products" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="GoldinAutoModel.FK_Order_Products_Product" FromRole="Order_Products" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Product">
-          <Key>
-            <PropertyRef Name="PID" />
-          </Key>
-          <Property Name="PID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Brand" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" />
-          <Property Name="UnitsInStock" Type="Int32" />
-          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="SID" Type="Int32" />
-          <Property Name="ROL" Type="Int32" />
-          <NavigationProperty Name="Order_Products" Relationship="GoldinAutoModel.FK_Order_Products_Product" FromRole="Product" ToRole="Order_Products" />
-          <NavigationProperty Name="Supplier" Relationship="GoldinAutoModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -303,6 +288,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="PID" />
+          </Key>
+          <Property Name="PID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Brand" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="UnitsInStock" Type="Int32" />
+          <Property Name="Category" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="SID" Type="Int32" />
+          <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="FileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Order_Products" Relationship="GoldinAutoModel.FK_Order_Products_Product" FromRole="Product" ToRole="Order_Products" />
+          <NavigationProperty Name="Supplier" Relationship="GoldinAutoModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
+        </EntityType>
         <Association Name="FK_Order_Products_Product">
           <End Type="GoldinAutoModel.Product" Role="Product" Multiplicity="1" />
           <End Type="GoldinAutoModel.Order_Products" Role="Order_Products" Multiplicity="*" />
@@ -381,21 +383,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Products">
-            <EntityTypeMapping TypeName="GoldinAutoModel.Product">
-              <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="ROL" ColumnName="ROL" />
-                <ScalarProperty Name="SID" ColumnName="SID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Category" ColumnName="Category" />
-                <ScalarProperty Name="UnitsInStock" ColumnName="UnitsInStock" />
-                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
-                <ScalarProperty Name="Brand" ColumnName="Brand" />
-                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
-                <ScalarProperty Name="PID" ColumnName="PID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="GoldinAutoModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
@@ -419,6 +406,22 @@
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="SupplierName" ColumnName="SupplierName" />
                 <ScalarProperty Name="SID" ColumnName="SID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="GoldinAutoModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="FileName" ColumnName="FileName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="SID" ColumnName="SID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Category" ColumnName="Category" />
+                <ScalarProperty Name="UnitsInStock" ColumnName="UnitsInStock" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="Brand" ColumnName="Brand" />
+                <ScalarProperty Name="ProductName" ColumnName="ProductName" />
+                <ScalarProperty Name="PID" ColumnName="PID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

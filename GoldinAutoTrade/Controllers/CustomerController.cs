@@ -29,7 +29,11 @@ namespace GoldinAutoTrade.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddEditCustomer(Customer customer) 
         {
-            return RedirectToAction("Index");
+            if (ModelState.IsValid) 
+            {
+                await customerRepository.AddEditCustomer(customer);
+            }
+            return RedirectToAction("Index", "Customer");
         }
         
     }

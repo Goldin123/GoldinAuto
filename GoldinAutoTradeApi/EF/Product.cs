@@ -27,7 +27,8 @@ namespace GoldinAutoTradeApi.EF
         public string Category { get; set; }
         public string Description { get; set; }
         public Nullable<int> SID { get; set; }
-        public Nullable<int> ROL { get; set; }
+        public byte[] Image { get; set; }
+        public string FileName { get; set; }
     
         public virtual ICollection<Order_Products> Order_Products { get; set; }
         public virtual Supplier Supplier { get; set; }

@@ -28,13 +28,14 @@ namespace GoldinAutoTradeApi.Repository
             return false;
         }
 
-        List<ShoppingCart> IShoppingCartRepository.GetShoppingCart()
+        List<ShoppingCart> IShoppingCartRepository.GetShoppingCart(int CID)
         {
             try
             {
                 using (var context = new EF.GoldinAutoEntities())
                 {
                     return (from a in context.ShoppingCarts
+                            where a.CID == CID
                             select new ShoppingCart
                             {
                                 PID = (int)a.PID,
@@ -54,12 +55,12 @@ namespace GoldinAutoTradeApi.Repository
             }
         }
 
-        ShoppingCart IShoppingCartRepository.GetShoppingCartProduct(int Id)
+        ShoppingCart IShoppingCartRepository.GetShoppingCartProduct(int CID,int PID)
         {
             using (var context = new EF.GoldinAutoEntities())
             {
                 return (from a in context.ShoppingCarts
-                        where a.PID == Id
+                        where a.PID == PID && a.CID == CID
                         select new ShoppingCart
                         {
                              CID = (int)a.CID,

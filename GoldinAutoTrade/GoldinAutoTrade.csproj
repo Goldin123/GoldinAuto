@@ -171,11 +171,13 @@
     <Compile Include="Interface\IOrderReposotiry.cs" />
     <Compile Include="Interface\IProductRepository.cs" />
     <Compile Include="Interface\IShoppongCartRepository.cs" />
+    <Compile Include="Interface\ISupplierRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\ShoppingCartRepository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1475,6 +1477,12 @@
     <Content Include="Content\plugins\jquery-validation\localization\methods_nl.min.js" />
     <Content Include="Content\plugins\jquery-validation\localization\methods_pt.js" />
     <Content Include="Content\plugins\jquery-validation\localization\methods_pt.min.js" />
+    <Content Include="Content\plugins\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\plugins\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\plugins\jquery.validate.js" />
+    <Content Include="Content\plugins\jquery.validate.min.js" />
+    <Content Include="Content\plugins\jquery.validate.unobtrusive.js" />
+    <Content Include="Content\plugins\jquery.validate.unobtrusive.min.js" />
     <Content Include="Content\plugins\jquery\jquery.js" />
     <Content Include="Content\plugins\jquery\jquery.min.js" />
     <Content Include="Content\plugins\jquery\jquery.slim.js" />
@@ -2274,6 +2282,7 @@
     <Content Include="Views\Shopping\OrderHistory.cshtml" />
     <Content Include="Views\Shared\_ShoppingCart.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\Products\AddProduct.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

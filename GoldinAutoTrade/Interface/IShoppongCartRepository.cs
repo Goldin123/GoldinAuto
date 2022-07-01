@@ -10,8 +10,8 @@ namespace GoldinAutoTrade.Interface
     internal interface IShoppongCartRepository
     {
         Task<Tuple<bool>> AddToCart(ShoppingCart shoppingCart);
-        Task<Tuple<ShoppingCart>> GetProductInBag(int Id);
-        Task<Tuple<List<ShoppingCart>>> GetShoppingCart();
+        Task<Tuple<ShoppingCart>> GetProductInBag(int PID);
+        Task<Tuple<List<ShoppingCart>>> GetShoppingCart(int CID);
 
         
     }

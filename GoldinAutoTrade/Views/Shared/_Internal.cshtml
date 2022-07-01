@@ -55,7 +55,7 @@
                                 <i class="nav-icon fas fa-smile"></i>
                                 <p>
                                     Profile
-                                    
+
                                 </p>
                             </a>
                         </li>
@@ -71,11 +71,13 @@
                                 <li class="nav-item">
                                     <a href="@Url.Action("Index","Products")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
-                                        <p>View</p>
+                                        <p>View
+                                            <span class="right badge badge-success">(@GlodinAutoTradeModel.Models.Globals.TotalProducts)</span>
+                                        </p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a href="@Url.Action("Add","Products")" class="nav-link">
+                                    <a href="@Url.Action("AddProduct","Products")" class="nav-link">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Add</p>
                                     </a>
@@ -88,7 +90,7 @@
                                 <i class="nav-icon fas fa-shopping-bag"></i>
                                 <p>
                                     Shopping Cart
-                                    <span class="right badge badge-primary">Bag</span>
+                                    <span class="right badge badge-primary">(@GlodinAutoTradeModel.Models.Globals.ShoppingCartItems)</span>
                                 </p>
                             </a>
                         </li>
@@ -161,8 +163,16 @@
     <script src="~/Content/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+    <script src="~/Content/plugins/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Content/plugins/jquery.validate.min.js"></script>
+    <script src="~/Content/plugins/jquery.validate.unobtrusive.min.js"></script>
     <!-- overlayScrollbars -->
     <script src="~/Content/plugins/overlayScrollbars/js/OverlayScrollbars.min.js"></script>
+
+    <script src="~/Content/plugins/bs-custom-file-input/bs-custom-file-input.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="~/Content/dist/js/adminlte.js"></script>
 
@@ -171,7 +181,7 @@
     <script src="~/Content/plugins/jquery-mousewheel/jquery.mousewheel.js"></script>
     <script src="~/Content/plugins/raphael/raphael.min.js"></script>
     <script src="~/Content/plugins/jquery-mapael/jquery.mapael.min.js"></script>
-   
+
 </body>
 
 </html>

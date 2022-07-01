@@ -20,8 +20,8 @@ namespace GoldinAutoTrade.Controllers
         // GET: Shopping
         public async Task<ActionResult> Index()
         {
-            var shoppingItems = await shoppingCartRepository.GetShoppingCart();
-            if (shoppingItems != null)
+            var shoppingItems = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+            if (shoppingItems.Item1 != null)
                 return View(shoppingItems.Item1);
 
             return View(new List<ShoppingCart>());
@@ -30,44 +30,22 @@ namespace GoldinAutoTrade.Controllers
         [Authorize]
         public async Task<ActionResult> Purchase() 
         {
-            var userClaims = User.Identity as System.Security.Claims.ClaimsIdentity;
-            var email = userClaims?.FindFirst("preferred_username")?.Value;
-            var name = userClaims?.FindFirst("name")?.Value;
-            if (!string.IsNullOrEmpty(email))
-            {
+       
                 Customer customer = new Customer();
                 Order order = new Order();
                 List<ShoppingCart> shoppingCartItems = new List<ShoppingCart>();
-                var getCustomer = await customerRepository.GetCustomer(email);
+                var getCustomer = await customerRepository.GetCustomer(Globals.Email);
                 if (getCustomer.Item1 != null)                 
-                {
                     customer = getCustomer.Item1;
-
-                }
-                else 
-                {
-                    var names = name.Split(' ');
-                    customer.FirstName = names[0];
-                    customer.LastName = names[1];
-                    customer.Email = email;
-                    var addCustomer = await customerRepository.AddEditCustomer(customer);
-                    if (addCustomer.Item1 != null)                     
-                    {
-                        customer = addCustomer.Item1;
-                    }
-                }
 
                 var addOrder = await orderReposotiry.AddOrder(customer.CID);
                 
-                if (addOrder != null) 
-                {
+                if (addOrder.Item1 != null) 
                     order = addOrder.Item1;
 
-                }
+                var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);//Add CID as parameter
 
-                var getShoppingCart = await shoppingCartRepository.GetShoppingCart();
-
-                if(getShoppingCart != null) 
+                if(getShoppingCart.Item1 != null) 
                 {
                     shoppingCartItems = getShoppingCart.Item1;
                     if(shoppingCartItems != null) 
@@ -90,7 +68,7 @@ namespace GoldinAutoTrade.Controllers
                     }
 
 
-                }
+                
             }
 
             return RedirectToAction("Success");

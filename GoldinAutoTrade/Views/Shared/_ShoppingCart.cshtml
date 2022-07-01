@@ -5,6 +5,7 @@
     @Html.AntiForgeryToken();
 
     <tr>
+        <td><img src="@Model.ConvertedImage" width="250px" height="200px" alt="Alternate Text" /></td>
         <td>@Model.ProductName</td>
         <td>@Model.Description</td>
         <td>@Model.Brand</td>
