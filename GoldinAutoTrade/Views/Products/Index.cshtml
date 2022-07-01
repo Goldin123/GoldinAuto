@@ -9,50 +9,49 @@
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div>
-                <div class="card">
+            <div class="col-12">
+                <div class="card card-primary">
                     <div class="card-header">
-                        <h3 class="card-title">Available Products</h3>
+                        <h3 class="card-title">List of products</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Name</th>
-                                    <th>Description</th>
-                                    <th>Brand</th>
-                                    <th>Category</th>
-                                    <th>Units Available</th>
-                                    <th>Price</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var item in Model)
-                                {
-                                    @Html.Partial("_ShoppingCart", item);
+                        <div class="row mt-4">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-sm-4">
+                                    <div class="position-relative">
+                                        <img src="@item.ConvertedImage" alt="Photo 1" width="250px" height="200px" class="img-fluid">
+                                        <div class="ribbon-wrapper ribbon-lg">
+                                            <div class="ribbon bg-success text-lg">
+                                                @String.Format("{0:c}", item.UnitPrice)
+                                            </div>
+                                        </div>
+                                    </div><br />
+                                    
+                                          <div class="info-box bg-info">
+                                              <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                                              <div class="info-box-content">
+                                                  <span class="info-box-text"><strong> @item.ProductName</strong></span>
+                                                  <span class="info-box-text">@item.Description</span>
+                                                  <span class="info-box-number">@item.UnitsInStock in Stock</span>
+                                                  <span class="progress-description">
+                                                      @String.Format("{0:c}", item.UnitPrice)
+                                                  </span>
+                                              </div>
+                                              @Html.ActionLink("Add To Cart","AddToCart","Products",new { ID = item.PID}, new { @class="btn btn-default" } )
+                                          </div>
+                                    
+                                </div>
+                            }
 
-                                }
-
-
-                            </tbody>
-                        </table>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        @Html.ActionLink("Add Product", "AddProduct", "Products", null, new { @class = "btn btn-secondary" })
-                        @if (GlodinAutoTradeModel.Models.Globals.ShoppingCartItems > 0)
-                        {
-                            @Html.ActionLink("Proceed to Checkout", "Index", "Home", null, new { @class = "btn btn-primary" })
-                        }
-                    </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                    <!-- /.card -->
+                    <!-- /.card-body -->
                 </div>
-
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
         </div>
         <!-- /.row -->
 
