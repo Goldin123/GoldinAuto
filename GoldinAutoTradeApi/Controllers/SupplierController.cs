@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GoldinAutoTradeApi.Inteface;
+using GoldinAutoTradeApi.Repository;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -9,31 +11,20 @@ namespace GoldinAutoTradeApi.Controllers
 {
     public class SupplierController : ApiController
     {
-        // GET: api/Supplier
-        public IEnumerable<string> Get()
+        ISupplierRepository supplierRepository = new SupplierRepository();
+        [Route("api/Supplier/GetSuppliers")]
+        [HttpGet]
+        public IHttpActionResult GetSuppliers()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET: api/Supplier/5
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Supplier
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT: api/Supplier/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE: api/Supplier/5
-        public void Delete(int id)
-        {
+            try
+            {
+                var suppliers = supplierRepository.GetSuppliers();
+                return Ok(suppliers);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
         }
     }
 }

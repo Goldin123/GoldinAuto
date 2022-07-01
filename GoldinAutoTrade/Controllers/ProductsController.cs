@@ -14,6 +14,7 @@ namespace GoldinAutoTrade.Controllers
     {
         IProductRepository productRepository = new ProductRepository();
         IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
+        ISupplierRepository supplierRepository = new SupplierRepository();
         // GET: Products
         [Authorize]
         public async Task<ActionResult> Index()
@@ -50,14 +51,14 @@ namespace GoldinAutoTrade.Controllers
                         cart.PID = product.PID;
                         cart.UnitPrice = (double)product.UnitPrice;
                         cart.Quantity = 1;
-                        cart.CID = 1;
+                        cart.CID = Globals.CID;
                     }
                     var addUpdateCart = await shoppingCartRepository.AddToCart(cart);
                     if(addUpdateCart != null) 
                     {
                         if (addUpdateCart.Item1) 
                         {
-                            var updateProduct = await productRepository.UpdateProductInStock(products.PID);
+                            await productRepository.UpdateProductInStock(products.PID);
                         }
                     }
                    
@@ -65,6 +66,51 @@ namespace GoldinAutoTrade.Controllers
             }
 
             return RedirectToAction("Index");
+        }
+
+        [Authorize]
+        public async Task<ActionResult> AddProduct()
+        {
+            var getSuppliers = await supplierRepository.GetSuppliers();
+            if (getSuppliers.Item1 != null)
+            {
+                List<SelectListItem> options = new List<SelectListItem>();
+
+                foreach (var supplier in getSuppliers.Item1)
+                {
+                    var option = new SelectListItem
+                    {
+                        Text = supplier.SupplierName,
+                        Value = supplier.SID.ToString()
+                    };
+
+                    options.Add(option);
+                }
+
+                ViewBag.Suppliers = options;
+            }
+            return View();
+        }
+
+        [HttpPost]
+        [Authorize]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddProductToInventory(Product product) 
+        {
+            if (ModelState.IsValid) 
+            {
+                var result =  await productRepository.AddProduct(product);
+                if (result.Item1)
+                {
+                    var products = await productRepository.GetProducts();
+                    if (products.Item1 != null)
+                        Globals.TotalProducts = products.Item1.Count();
+
+                    TempData["ProductSuccess"] = "product added successfully.";
+                }
+            }
+
+            return RedirectToAction("AddProduct");
         }
     }
 }

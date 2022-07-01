@@ -210,11 +210,13 @@
     <Compile Include="Inteface\IOrderRepository.cs" />
     <Compile Include="Inteface\IProductRepository.cs" />
     <Compile Include="Inteface\IShoppingCartRepository.cs" />
+    <Compile Include="Inteface\ISupplierRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CustomerRepository.cs" />
     <Compile Include="Repository\OrderRepository.cs" />
     <Compile Include="Repository\ProductRepository.cs" />
     <Compile Include="Repository\ShoppingCartRepository.cs" />
+    <Compile Include="Repository\SupplierRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\GoldinAuto.mdf" />

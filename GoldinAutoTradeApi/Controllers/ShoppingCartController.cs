@@ -17,11 +17,11 @@ namespace GoldinAutoTradeApi.Controllers
 
         [Route("api/ShoppingCart/GetShoppingCart")]
         [HttpGet]
-        public IHttpActionResult GetShoppingCart()
+        public IHttpActionResult GetShoppingCart(int CID)
         {
             try
             {
-                var shoppingCarts = shoppingCartRepository.GetShoppingCart();
+                var shoppingCarts = shoppingCartRepository.GetShoppingCart(CID);
                 return Ok(shoppingCarts);
             }
             catch (Exception ex)
@@ -48,11 +48,11 @@ namespace GoldinAutoTradeApi.Controllers
 
         [Route("api/ShoppingCart/GetShoppingCartProduct")]
         [HttpGet]
-        public IHttpActionResult GetShoppingCartProduct(int Id)
+        public IHttpActionResult GetShoppingCartProduct(int CID, int PID)
         {
             try
             {
-                var productInBag = shoppingCartRepository.GetShoppingCartProduct(Id);
+                var productInBag = shoppingCartRepository.GetShoppingCartProduct(CID,PID);
                 return Ok(productInBag);
             }
             catch (Exception ex)

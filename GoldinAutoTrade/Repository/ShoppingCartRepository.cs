@@ -37,11 +37,11 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-       async Task<Tuple<ShoppingCart>> IShoppongCartRepository.GetProductInBag(int Id)
+       async Task<Tuple<ShoppingCart>> IShoppongCartRepository.GetProductInBag(int PID)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync($"api/ShoppingCart/GetShoppingCartProduct?Id={Id}");
+                HttpResponseMessage response = await client.GetAsync($"api/ShoppingCart/GetShoppingCartProduct?CID={Globals.CID}&PID={PID}");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
@@ -59,11 +59,11 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<List<ShoppingCart>>> IShoppongCartRepository.GetShoppingCart()
+        async Task<Tuple<List<ShoppingCart>>> IShoppongCartRepository.GetShoppingCart(int CID)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync($"api/ShoppingCart/GetShoppingCart");
+                HttpResponseMessage response = await client.GetAsync($"api/ShoppingCart/GetShoppingCart?CID={Globals.CID}");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();

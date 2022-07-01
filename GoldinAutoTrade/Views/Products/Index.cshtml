@@ -19,13 +19,14 @@
                         <table class="table table-bordered">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>Name</th>
                                     <th>Description</th>
                                     <th>Brand</th>
                                     <th>Category</th>
                                     <th>Units Available</th>
                                     <th>Price</th>
-                                    <th ></th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -34,16 +35,23 @@
                                     @Html.Partial("_ShoppingCart", item);
 
                                 }
-                               
+
 
                             </tbody>
                         </table>
                     </div>
-                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        @Html.ActionLink("Add Product", "AddProduct", "Products", null, new { @class = "btn btn-secondary" })
+                        @if (GlodinAutoTradeModel.Models.Globals.ShoppingCartItems > 0)
+                        {
+                            @Html.ActionLink("Proceed to Checkout", "Index", "Home", null, new { @class = "btn btn-primary" })
+                        }
+                    </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <!-- /.card -->
                 </div>
-                <!-- /.card -->
-                <!-- /.card -->
-            </div>
 
         </div>
         <!-- /.row -->
