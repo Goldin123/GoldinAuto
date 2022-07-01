@@ -30,7 +30,6 @@ namespace GoldinAutoTradeApi.Controllers
             }
         }
 
-        // POST: api/Customer
         [Route("api/ShoppingCart/AddShoppingCard")]
         [HttpPost]
         public IHttpActionResult AddShoppingCard(ShoppingCart shoppingCart)
@@ -38,6 +37,21 @@ namespace GoldinAutoTradeApi.Controllers
             try
             {
                 var shopping = shoppingCartRepository.AddToCart(shoppingCart);
+                return Ok(shopping);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ShoppingCart/UpdateCart")]
+        [HttpPost]
+        public IHttpActionResult UpdateCart(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                var shopping = shoppingCartRepository.UpdateCart(shoppingCart);
                 return Ok(shopping);
             }
             catch (Exception ex)

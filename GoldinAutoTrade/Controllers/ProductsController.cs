@@ -33,6 +33,7 @@ namespace GoldinAutoTrade.Controllers
             int id = Convert.ToInt32(ID);
             var cart = new ShoppingCart();
             var getProduct = await productRepository.GetProduct(id);
+            var success = false;
             if (getProduct != null)
             {
                 Product product = getProduct.Item1;
@@ -42,6 +43,8 @@ namespace GoldinAutoTrade.Controllers
                     if (getProductInBag.Item1 != null)
                     {
                         cart = getProductInBag.Item1;
+                        await shoppingCartRepository.UpdateCart(cart);
+                        success = true;
                     }
                     else
                     {
@@ -50,16 +53,23 @@ namespace GoldinAutoTrade.Controllers
                         cart.UnitPrice = (double)product.UnitPrice;
                         cart.Quantity = 1;
                         cart.CID = Globals.CID;
+                        await shoppingCartRepository.AddToCart(cart);
+                        success = true;
                     }
-                    var addUpdateCart = await shoppingCartRepository.AddToCart(cart);
-                    if(addUpdateCart != null) 
+
+
+                    if (success)
                     {
-                        if (addUpdateCart.Item1) 
-                        {
-                            await productRepository.UpdateProductInStock(id);
-                        }
+                        var shoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+
+                        if (shoppingCart.Item1 != null)
+                            Globals.ShoppingCartItems = shoppingCart.Item1.Count();
+
+                        await productRepository.UpdateProductInStock(id);
+                        TempData["CartAdded"] = $"1 {product.ProductName} added to cart.";
                     }
-                   
+
+
                 }
             }
 

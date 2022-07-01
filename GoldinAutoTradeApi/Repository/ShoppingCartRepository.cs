@@ -28,6 +28,20 @@ namespace GoldinAutoTradeApi.Repository
             return false;
         }
 
+        bool IShoppingCartRepository.UpdateCart(ShoppingCart shoppingCart) 
+        {
+            using (var context = new EF.GoldinAutoEntities())
+            {
+                var shpcart = context.ShoppingCarts.Where(x => x.CID == shoppingCart.CID && x.PID== shoppingCart.PID).FirstOrDefault();
+                if(shpcart != null) 
+                {
+                    shpcart.Quantity++;
+                    context.SaveChanges();
+                }
+                return true;
+            }
+        }
+
         List<ShoppingCart> IShoppingCartRepository.GetShoppingCart(int CID)
         {
             try

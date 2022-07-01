@@ -9,7 +9,7 @@ namespace GoldinAutoTradeApi.Repository
 {
     public class CustomerRepository : ICustomerRepository
     {
-        Customer ICustomerRepository.AddEditCustomer(Customer customer)
+        Customer ICustomerRepository.AddCustomer(Customer customer)
         {
             try
             {
@@ -35,9 +35,25 @@ namespace GoldinAutoTradeApi.Repository
                         };
                         context.Customers.Add(cust);
                         context.SaveChanges();
-                        return customer;
                     }
-                    else
+                    return customer;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        Customer ICustomerRepository.EditCustomer(Customer customer)
+        {
+            try
+            {
+                using (var context = new EF.GoldinAutoEntities())
+                {
+                    var existingCustomer = context.Customers.Where(a => a.Email == customer.Email).FirstOrDefault();
+                    if (existingCustomer != null)
                     {
                         existingCustomer.Address4 = customer.Address4;
                         existingCustomer.CardNumber = customer.CardNumber;
@@ -51,8 +67,9 @@ namespace GoldinAutoTradeApi.Repository
                         existingCustomer.Address2 = customer.Address2;
                         existingCustomer.Address3 = customer.Address3;
                         context.SaveChanges();
-                        return customer;
+                        
                     }
+                    return customer;
                 }
 
             }

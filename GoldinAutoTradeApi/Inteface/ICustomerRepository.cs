@@ -9,7 +9,8 @@ namespace GoldinAutoTradeApi.Inteface
 {
     internal interface ICustomerRepository
     {
-        Customer AddEditCustomer(Customer customer);
+        Customer AddCustomer(Customer customer);
+        Customer EditCustomer(Customer customer);
         Customer GetCustomer(string email);
     }
 }

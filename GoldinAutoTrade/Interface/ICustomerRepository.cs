@@ -9,7 +9,8 @@ namespace GoldinAutoTrade.Interface
 {
     internal interface ICustomerRepository
     {
-        Task<Tuple<Customer>> AddEditCustomer(Customer customer);
+        Task<Tuple<Customer>> AddCustomer(Customer customer);
+        Task<Tuple<Customer>> EditCustomer(Customer customer);
 
         Task<Tuple<Customer>> GetCustomer(string email);
         Task<Tuple<bool>> SetGlobalVariable(System.Security.Claims.ClaimsIdentity claims);

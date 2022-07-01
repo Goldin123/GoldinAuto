@@ -8,9 +8,26 @@
 <h2>Products </h2>
 <section class="content">
     <div class="container-fluid">
+        @if (TempData["CartAdded"] != null)
+        {
+            var msg = TempData["CartAdded"].ToString();
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="far fa-thumbs-up"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">@msg</span>
+                </div>
+            </div>
+        }
+        @Html.ActionLink("Add Product", "AddProduct", "Products", null, new { @class = "btn btn-secondary" })
+        @if (GlodinAutoTradeModel.Models.Globals.ShoppingCartItems > 0)
+        {
+            @Html.ActionLink("Proceed to Checkout", "Index", "Shopping", null, new { @class = "btn btn-primary" })
+        }
+        <br /><br />
         <div class="row">
             <div class="col-12">
-                <div class="card card-primary">
+                <div class="card ">
                     <div class="card-header">
                         <h3 class="card-title">List of products</h3>
                     </div>
@@ -28,20 +45,20 @@
                                             </div>
                                         </div>
                                     </div><br />
-                                    
-                                          <div class="info-box bg-info">
-                                              <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
-                                              <div class="info-box-content">
-                                                  <span class="info-box-text"><strong> @item.ProductName</strong></span>
-                                                  <span class="info-box-text">@item.Description</span>
-                                                  <span class="info-box-number">@item.UnitsInStock in Stock</span>
-                                                  <span class="progress-description">
-                                                      @String.Format("{0:c}", item.UnitPrice)
-                                                  </span>
-                                              </div>
-                                              @Html.ActionLink("Add To Cart","AddToCart","Products",new { ID = item.PID}, new { @class="btn btn-default" } )
-                                          </div>
-                                    
+
+                                    <div class="info-box bg-info">
+                                        <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                                        <div class="info-box-content">
+                                            <span class="info-box-text"><strong> @item.ProductName</strong></span>
+                                            <span class="info-box-text">@item.Description</span>
+                                            <span class="info-box-number">@item.UnitsInStock in Stock</span>
+                                            <span class="progress-description">
+                                                @String.Format("{0:c}", item.UnitPrice)
+                                            </span>
+                                        </div>
+                                        @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { ID = item.PID }, new { @class = "btn btn-warning", @style = "align-self: center;" })
+                                    </div>
+
                                 </div>
                             }
 
@@ -69,4 +86,5 @@ else
 {
     <p>Opps we ran out of products to sell.</p>
 }
+
 

@@ -15,9 +15,32 @@ namespace GoldinAutoTrade.Repository
         private readonly HttpClient client = Helper.ApiHttpClient.GetApiClient();
         IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
         IProductRepository productRepository = new ProductRepository();
-        async Task<Tuple<Customer>> ICustomerRepository.AddEditCustomer(Customer customer)
+        async Task<Tuple<Customer>> ICustomerRepository.AddCustomer(Customer customer)
         {
-           return await AddEditCustomer(customer);
+           return await AddCustomer(customer);
+        }
+
+        async Task<Tuple<Customer>> ICustomerRepository.EditCustomer(Customer customer)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync($"api/Customer/EditCustomer",
+                        new StringContent(JsonConvert.SerializeObject(customer), System.Text.Encoding.Unicode, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var cust = JsonConvert.DeserializeObject<Customer>(content);
+                        return new Tuple<Customer>(cust);
+                    }
+                }
+                return new Tuple<Customer>(null);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<Customer>(null);
+            }
         }
 
         private async Task<Tuple<Customer>> GetCustomer(string email)
@@ -42,13 +65,11 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        private async Task<Tuple<Customer>> AddEditCustomer(Customer customer) 
+        private async Task<Tuple<Customer>> AddCustomer(Customer customer) 
         {
             try
-            {
-                
-
-                HttpResponseMessage response = await client.PostAsync($"api/Customer/AddEditCustomer",
+            {               
+                HttpResponseMessage response = await client.PostAsync($"api/Customer/AddCustomer",
                         new StringContent(JsonConvert.SerializeObject(customer), System.Text.Encoding.Unicode, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
@@ -88,7 +109,7 @@ namespace GoldinAutoTrade.Repository
             {
                 Customer customer = new Customer();
                 customer = SetCustomer(customer);
-                var addCustomer = await AddEditCustomer(customer);
+                var addCustomer = await AddCustomer(customer);
                 if (addCustomer.Item1 != null)
                 {
                     getCustomerDetails = await GetCustomer(Globals.Email);
