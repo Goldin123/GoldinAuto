@@ -80,5 +80,28 @@ namespace GoldinAutoTrade.Repository
                 return new Tuple<List<ShoppingCart>>(new List<ShoppingCart>());
             }
         }
+
+        async Task<Tuple<bool>> IShoppongCartRepository.UpdateCart(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/UpdateCart",
+                        new StringContent(JsonConvert.SerializeObject(shoppingCart), System.Text.Encoding.Unicode, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var products = JsonConvert.DeserializeObject<bool>(content);
+                        return new Tuple<bool>(true);
+                    }
+                }
+                return new Tuple<bool>(false);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<bool>(false);
+            }
+        }
     }
 }

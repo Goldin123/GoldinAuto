@@ -15,7 +15,7 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12">
-                @using (Html.BeginForm("AddEditCustomer", "Customer", FormMethod.Post))
+                @using (Html.BeginForm("EditCustomer", "Customer", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken();
                     @Html.HiddenFor(m => m.CID, new { @Value = Model.CID })

@@ -27,11 +27,11 @@ namespace GoldinAutoTrade.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddEditCustomer(Customer customer) 
+        public async Task<ActionResult> EditCustomer(Customer customer) 
         {
             if (ModelState.IsValid) 
             {
-                await customerRepository.AddEditCustomer(customer);
+                await customerRepository.EditCustomer(customer);
             }
             return RedirectToAction("Index", "Customer");
         }
