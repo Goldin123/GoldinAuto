@@ -27,20 +27,18 @@ namespace GoldinAutoTrade.Controllers
             return View(new List<Product>());
         }
 
-        [HttpPost]
         [Authorize]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddToCart(Product products)
+        public async Task<ActionResult> AddToCart(string ID )
         {
-            //int ID = Convert.ToInt32(id);
+            int id = Convert.ToInt32(ID);
             var cart = new ShoppingCart();
-            var getProduct = await productRepository.GetProduct(products.PID);
+            var getProduct = await productRepository.GetProduct(id);
             if (getProduct != null)
             {
                 Product product = getProduct.Item1;
                 if (product != null && product.UnitsInStock > 0)
                 {
-                    var getProductInBag = await shoppingCartRepository.GetProductInBag(products.PID);
+                    var getProductInBag = await shoppingCartRepository.GetProductInBag(id);
                     if (getProductInBag.Item1 != null)
                     {
                         cart = getProductInBag.Item1;
@@ -58,7 +56,7 @@ namespace GoldinAutoTrade.Controllers
                     {
                         if (addUpdateCart.Item1) 
                         {
-                            await productRepository.UpdateProductInStock(products.PID);
+                            await productRepository.UpdateProductInStock(id);
                         }
                     }
                    
