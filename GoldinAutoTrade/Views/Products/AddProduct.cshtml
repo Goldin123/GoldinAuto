@@ -5,7 +5,11 @@
     Layout = "~/Views/Shared/_Internal.cshtml";
     var suppliers = (List<SelectListItem>)ViewBag.Suppliers;
 }
-
+<style>
+    .card-body {
+        width: 600px
+    }
+</style>
 <h2>Add Product &nbsp;&nbsp;</h2>
 <section class="content">
     <div class="container-fluid">
@@ -25,7 +29,7 @@
                 @using (Html.BeginForm("AddProductToInventory", "Products", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
                     @Html.AntiForgeryToken();
-                    <div class="card card-secondary">
+                    <div class="card">
                         <div class="card-header">
                             <h3 class="card-title">Product Details</h3>
                         </div>

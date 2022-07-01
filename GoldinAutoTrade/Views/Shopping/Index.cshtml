@@ -5,59 +5,143 @@
 }
 
 <h2>Shopping Cart</h2>
-
 <section class="content">
     <div class="container-fluid">
         <div class="row">
-            <div>
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Available Shopping Items</h3>
+            <div class="col-12">
+                <!-- Main content -->
+                <div class="invoice p-3 mb-3" style="width:150%">
+                    <!-- title row -->
+                    <div class="row">
+                        <div class="col-12">
+                            <h4>
+                                <i class="fas fa-globe"></i> Goldin Auto Trade
+                                <small class="float-right">Date: @DateTime.Now.ToString("dd/MM/yyyy")</small>
+                            </h4>
+                        </div>
+                        <!-- /.col -->
                     </div>
-                    <div class="card-body">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>Product Name</th>
-                                    <th>Unit Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Count > 0)
-                                {
-                                    foreach (var item in Model)
+                    <!-- info row -->
+                    <div class="row invoice-info">
+                        <div class="col-sm-4 invoice-col">
+                            From
+                            <address>
+                                <strong>Goldin Auto Trade</strong><br>
+                                11 Buccleuch Drive<br>
+                                Buccleuch, Sandton 2091<br>
+                                Cell: (079) 868-2406<br>
+                                Email: baloyi.jabu@gmail.com
+                            </address>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+                            To
+                            <address>
+                                <strong>@GlodinAutoTradeModel.Models.Globals.Name</strong><br>
+                                Email: @GlodinAutoTradeModel.Models.Globals.Email
+                            </address>
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-sm-4 invoice-col">
+                           
+                            <b>Account:</b> @GlodinAutoTradeModel.Models.Globals.CID
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- Table row -->
+                    <div class="row">
+                        <div class="col-12 table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+
+                                    <tr>
+                                        <th>Qty</th>
+                                        <th>Product</th>
+                                        <th>Unit Price</th>
+                                        <th>Subtotal</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model.Count > 0)
+                                    {
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Quantity</td>
+                                                <td>@item.ProductName</td>
+                                                <td>@item.UnitPrice</td>
+                                                <td>@String.Format("{0:c}", (item.Quantity * item.UnitPrice))</td>
+                                            </tr>
+                                        }
+                                    }
+                                    else
                                     {
                                         <tr>
-                                            <td>
-                                                @item.ProductName
-                                            </td>
-                                            <td>@item.UnitPrice</td>
-                                            <td>@item.Quantity</td>
-                                            <td>@String.Format("{0:c}", (item.Quantity * item.UnitPrice))</td>
+                                            <td colspan="4">Cart is empty.</td>
                                         </tr>
                                     }
-                                }
-                                else
-                                {
-                                    <tr>
-                                        <td colspan="4">Cart is empty.</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.col -->
                     </div>
-                    <div class="card-footer">
-                        @if (Model.Count > 0)
-                        {
-                            @Html.ActionLink("Countinue", "Purchase", "Shopping", null, new { @class = "btn btn-primary" })
-                        }
-                    </div>
+                    <!-- /.row -->
 
+                    <div class="row">
+                        <!-- accepted payments column -->
+                        <div class="col-6">
+                            <p class="lead">Payment Methods:</p>
+                            <img src="~/Content/dist/img/credit/visa.png" alt="Visa">
+                            <img src="~/Content/dist/img/credit/mastercard.png" alt="Mastercard">
+                            <img src="~/Content/dist/img/credit/american-express.png" alt="American Express">
+                            <img src="~/Content/dist/img/credit/paypal2.png" alt="Paypal">
+                        </div>
+                        <!-- /.col -->
+                        <div class="col-6">
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <tbody>
+                                        <tr>
+                                            <th>Shipping:</th>
+                                            <td>R0.00 (Free)</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Total:</th>
+                                            @{
+                                                double Total = 0;
+                                                if (Model.Count > 0)
+                                                {
+                                                    foreach(var item in Model)
+                                                    {
+                                                        Total = ((item.Quantity * item.UnitPrice) + Total);
+                                                    }
+                                                }
+                                            }
+                                            <td>@String.Format("{0:c}", Total)</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                    <!-- /.row -->
+                    <!-- this row will not appear when printing -->
+                    <div class="row no-print">
+                        <div class="col-12">
+                            @if (Model.Count > 0)
+                            {
+                                <a href="@Url.Action("Purchase", "Shopping")" class="btn btn-success float-right">
+                                    <i class="far fa-credit-card"></i> Submit Payment
+                                </a>
+                            }
+                            </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
+                <!-- /.invoice -->
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
 </section>
