@@ -53,7 +53,7 @@
                                             <span class="info-box-text">@item.Description</span>
                                             <span class="info-box-number">@item.UnitsInStock in Stock</span>
                                             <span class="progress-description">
-                                                @String.Format("{0:c}", item.UnitPrice)
+                                                @String.Format("{0:c}", item.UnitPrice) each*
                                             </span>
                                         </div>
                                         @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { ID = item.PID }, new { @class = "btn btn-warning", @style = "align-self: center;" })

@@ -20,7 +20,9 @@
                     @Html.AntiForgeryToken();
                     @Html.HiddenFor(m => m.CID, new { @Value = Model.CID })
                     <div class="card">
-                        
+                        <div class="card-header">
+                            <h3 class="card-title">User Details</h3>
+                        </div>
                         <div class="card-body">
                             <div class="form-group row">
                                 <label for="FirstName" class="col-sm-2 col-form-label">Firstname</label>

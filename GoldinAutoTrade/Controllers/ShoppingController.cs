@@ -43,7 +43,7 @@ namespace GoldinAutoTrade.Controllers
                 if (addOrder.Item1 != null) 
                     order = addOrder.Item1;
 
-                var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);//Add CID as parameter
+                var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
 
                 if(getShoppingCart.Item1 != null) 
                 {
