@@ -79,7 +79,12 @@
                                         foreach (var item in Model)
                                         {
                                             <tr>
-                                                <td>@item.Quantity</td>
+                                                <td>
+                                                    <a class="btn btn-secondary" onclick="Change(this, 1, @item.PID)">+</a>
+                                                    <span class="p-name">@item.Quantity</span>
+                                                    <a class="btn btn-secondary" onclick="Change(this, 0,  @item.PID)">-</a>
+                                                    <a class="btn btn-warning" onclick="Change(this, -1,  @item.PID)">Remove</a>
+                                                </td>
                                                 <td>@item.ProductName</td>
                                                 <td>@item.UnitPrice</td>
                                                 <td>@String.Format("{0:c}", (item.Quantity * item.UnitPrice))</td>
@@ -130,7 +135,7 @@
                                                     }
                                                 }
                                             }
-                                            <td>@String.Format("{0:c}", Total)</td>
+                                            <td id="totalPrice">@String.Format("{0:c}", Total)</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -156,3 +161,44 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
+<script>
+    function UpdateTotalPrice() {
+        $.ajax({
+            type: 'GET',
+            url: "Shopping/UpdateTotal",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                if (msg.d == "$0.00") {
+                    location.reload();
+                    return;
+                }
+
+                $('#totalPrice').text(msg.d);
+            }
+        })
+    }
+
+    function Change(el, type, pid) {
+        var data = {
+            'type': type,
+            'pId': pid
+        };
+        $.ajax({
+            type: 'POST',
+            url: "Shopping/QuanityChange",
+            data: "{ 'type': " + type + ", 'pId': " + pid + "}",
+            contentType: "application/json; charset=utf-8",
+            success: function (msg) {
+                if (msg.d == 0) {
+                    el.parentNode.parentNode.remove();
+                } else {
+                    $(el).siblings('span')[0].innerHTML = msg.d
+                }
+                UpdateTotalPrice()
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                debugger;
+            }
+        });
+    }
+</script>

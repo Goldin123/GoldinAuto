@@ -15,6 +15,7 @@ namespace GoldinAutoTrade.Controllers
         ICustomerRepository customerRepository = new CustomerRepository();
         IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
         IOrderReposotiry orderReposotiry = new OrderRepository();
+        IProductRepository productRepository = new ProductRepository();
 
         [Authorize]
         // GET: Shopping
@@ -77,8 +78,69 @@ namespace GoldinAutoTrade.Controllers
             return RedirectToAction("Index");
         }
 
-        [Authorize]
-        public async Task<ActionResult> Success()=> View();
+        public async Task<JsonResult> QuanityChange(int type, int pId)
+        {
+
+            var product = await shoppingCartRepository.GetProductInBag(pId);
+            if (product.Item1 == null)
+            {
+                return Json(new { d = "0" });
+            }
+            ShoppingCart shoppingCartProduct = new ShoppingCart();
+            shoppingCartProduct = product.Item1;
+
+            var getProduct  = await productRepository.GetProduct(pId);
+            Product actualProduct = getProduct.Item1;
+
+            int quantity;
+            // if type 0, decrease quantity
+            // if type 1, increase quanity
+            switch (type)
+            {
+                case 0:
+                    shoppingCartProduct.Quantity--;
+                    actualProduct.UnitsInStock++;
+                    break;
+                case 1:
+                    shoppingCartProduct.Quantity++;
+                    actualProduct.UnitsInStock--;
+                    break;
+                case -1:
+                    actualProduct.UnitsInStock += shoppingCartProduct.Quantity;
+                    shoppingCartProduct.Quantity = 0;
+                    break;
+                default:
+                    return Json(new { d = "0" });
+            }
+
+            if (shoppingCartProduct.Quantity == 0)
+            {
+                //context.ShoppingCartDatas.Remove(product);
+                quantity = 0;
+            }
+            else
+            {
+                quantity = shoppingCartProduct.Quantity;
+            }
+            //context.SaveChanges();
+
+            return Json(new { d = quantity });
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> UpdateTotal()
+        {
+            decimal total;
+            try
+            {
+                var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+
+                total = (decimal)getShoppingCart.Item1.Select(p => p.UnitPrice * p.Quantity).Sum();
+            }
+            catch (Exception) { total = 0; }
+
+            return Json(new { d = String.Format("{0:c}", total) }, JsonRequestBehavior.AllowGet);
+        }
 
         [Authorize]
         public async Task<ActionResult> OrderHistory() 
