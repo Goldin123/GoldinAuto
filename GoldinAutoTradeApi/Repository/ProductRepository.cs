@@ -45,6 +45,7 @@ namespace GoldinAutoTradeApi.Repository
                 using (var context = new EF.GoldinAutoEntities())
                 {
                     return (from a in context.Products
+                            where a.UnitsInStock > 0
                             select new Product
                             {
                                 PID = a.PID,

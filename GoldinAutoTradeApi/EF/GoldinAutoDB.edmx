@@ -100,6 +100,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Order_Product_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="OID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
+          <End Role="Order_Product" Type="Self.Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Product_Supplier">
           <End Role="Supplier" Type="Self.Supplier" Multiplicity="0..1" />
           <End Role="Product" Type="Self.Product" Multiplicity="*" />
@@ -123,6 +147,14 @@
           <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Order" Association="Self.FK_Order_Product_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Product" Association="Self.FK_Order_Product_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Supplier" Association="Self.FK_Product_Supplier">
             <End Role="Supplier" EntitySet="Supplier" />
@@ -149,6 +181,14 @@
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Order_Product" EntityType="GoldinAutoModel.Order_Product" />
+          <AssociationSet Name="FK_Order_Product_Order" Association="GoldinAutoModel.FK_Order_Product_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Product_Product" Association="GoldinAutoModel.FK_Order_Product_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Order_Product" EntitySet="Order_Product" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="ApiUser">
           <Key>
@@ -185,6 +225,7 @@
           <Property Name="DeliveryDate" Type="DateTime" Precision="3" />
           <Property Name="CID" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="GoldinAutoModel.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="Order_Product" Relationship="GoldinAutoModel.FK_Order_Product_Order" FromRole="Order" ToRole="Order_Product" />
         </EntityType>
         <EntityType Name="ShoppingCart">
           <Key>
@@ -238,6 +279,7 @@
           <Property Name="Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="FileName" Type="String" MaxLength="1500" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Supplier" Relationship="GoldinAutoModel.FK_Product_Supplier" FromRole="Product" ToRole="Supplier" />
+          <NavigationProperty Name="Order_Product" Relationship="GoldinAutoModel.FK_Order_Product_Product" FromRole="Product" ToRole="Order_Product" />
         </EntityType>
         <Association Name="FK_Product_Supplier">
           <End Type="GoldinAutoModel.Supplier" Role="Supplier" Multiplicity="0..1" />
@@ -260,7 +302,33 @@
           <Property Name="PID" Type="Int32" />
           <Property Name="Quantity" Type="Int32" />
           <Property Name="TotalPrice" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="Order" Relationship="GoldinAutoModel.FK_Order_Product_Order" FromRole="Order_Product" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="GoldinAutoModel.FK_Order_Product_Product" FromRole="Order_Product" ToRole="Product" />
         </EntityType>
+        <Association Name="FK_Order_Product_Order">
+          <End Type="GoldinAutoModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="GoldinAutoModel.Order_Product" Role="Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="OID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Product_Product">
+          <End Type="GoldinAutoModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="GoldinAutoModel.Order_Product" Role="Order_Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="PID" />
+            </Principal>
+            <Dependent Role="Order_Product">
+              <PropertyRef Name="PID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
