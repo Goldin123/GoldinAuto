@@ -14,6 +14,11 @@ namespace GoldinAutoTradeApi.EF
     
     public partial class Product
     {
+        public Product()
+        {
+            this.Order_Product = new HashSet<Order_Product>();
+        }
+    
         public int PID { get; set; }
         public string ProductName { get; set; }
         public string Brand { get; set; }
@@ -26,5 +31,6 @@ namespace GoldinAutoTradeApi.EF
         public string FileName { get; set; }
     
         public virtual Supplier Supplier { get; set; }
+        public virtual ICollection<Order_Product> Order_Product { get; set; }
     }
 }

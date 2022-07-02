@@ -13,7 +13,9 @@
         <AssociationConnector Association="GoldinAutoModel.FK_Order_Customer" />
         <EntityTypeShape EntityType="GoldinAutoModel.Product" Width="1.5" PointX="3" PointY="0.875" />
         <AssociationConnector Association="GoldinAutoModel.FK_Product_Supplier" />
-        <EntityTypeShape EntityType="GoldinAutoModel.Order_Product" Width="1.5" PointX="5.375" PointY="7.75" />
+        <EntityTypeShape EntityType="GoldinAutoModel.Order_Product" Width="1.5" PointX="5.25" PointY="1.625" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Order_Product_Order" />
+        <AssociationConnector Association="GoldinAutoModel.FK_Order_Product_Product" />
         </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
