@@ -7,6 +7,17 @@
 <h2>Shopping Cart</h2>
 <section class="content">
     <div class="container-fluid">
+        @if (TempData["PaymentStatus"] != null)
+        {
+            var msg = TempData["PaymentStatus"].ToString();
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="far fa-thumbs-up"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text">@msg</span>
+                </div>
+            </div>
+        }
         <div class="row">
             <div class="col-12">
                 <!-- Main content -->
@@ -43,7 +54,7 @@
                         </div>
                         <!-- /.col -->
                         <div class="col-sm-4 invoice-col">
-                           
+
                             <b>Account:</b> @GlodinAutoTradeModel.Models.Globals.CID
                         </div>
                         <!-- /.col -->
@@ -81,7 +92,7 @@
                                             <td colspan="4">Cart is empty.</td>
                                         </tr>
                                     }
-                                    
+
                                 </tbody>
                             </table>
                         </div>
@@ -113,7 +124,7 @@
                                                 double Total = 0;
                                                 if (Model.Count > 0)
                                                 {
-                                                    foreach(var item in Model)
+                                                    foreach (var item in Model)
                                                     {
                                                         Total = ((item.Quantity * item.UnitPrice) + Total);
                                                     }
@@ -137,7 +148,7 @@
                                     <i class="far fa-credit-card"></i> Submit Payment
                                 </a>
                             }
-                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- /.invoice -->

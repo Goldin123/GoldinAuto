@@ -18,6 +18,7 @@
                             <thead>
                                 <tr>
                                     <th>Order Date</th>
+                                    <th>Order Number</th>
                                     <th>Product Name</th>                                    
                                     <th>Quantity</th>
                                     <th>Total</th>
@@ -33,6 +34,7 @@
                                             <td>
                                                 @item.OrderDate
                                             </td>
+                                            <td>@item.OID</td>
                                             <td>@item.ProductName</td>
                                             <td>@item.Quantity</td>
                                             <td>@String.Format("{0:c}", (item.TotalPrice))</td>

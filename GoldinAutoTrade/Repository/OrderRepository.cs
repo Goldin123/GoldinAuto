@@ -13,19 +13,19 @@ namespace GoldinAutoTrade.Repository
     public class OrderRepository : IOrderReposotiry
     {
         private readonly HttpClient client = Helper.ApiHttpClient.GetApiClient();
-        async Task<Tuple<Order>> IOrderReposotiry.AddOrder(int CID)
+        async Task<Tuple<Order>> IOrderReposotiry.AddOrder(Order order)
         {
             try
             {
                 HttpResponseMessage response = await client.PostAsync($"api/Order/AddOrder",
-                        new StringContent(JsonConvert.SerializeObject(CID), System.Text.Encoding.Unicode, "application/json"));
+                        new StringContent(JsonConvert.SerializeObject(order), System.Text.Encoding.Unicode, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(content))
                     {
-                        var order = JsonConvert.DeserializeObject<Order>(content);
-                        return new Tuple<Order>(order);
+                        var newOrder = JsonConvert.DeserializeObject<Order>(content);
+                        return new Tuple<Order>(newOrder);
                     }
                 }
                 return new Tuple<Order>(null);

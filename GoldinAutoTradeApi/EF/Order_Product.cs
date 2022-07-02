@@ -12,15 +12,12 @@ namespace GoldinAutoTradeApi.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Order_Products
+    public partial class Order_Product
     {
         public int OPID { get; set; }
-        public int OID { get; set; }
-        public int PID { get; set; }
+        public Nullable<int> OID { get; set; }
+        public Nullable<int> PID { get; set; }
         public Nullable<int> Quantity { get; set; }
         public Nullable<decimal> TotalPrice { get; set; }
-    
-        public virtual Order Order { get; set; }
-        public virtual Product Product { get; set; }
     }
 }

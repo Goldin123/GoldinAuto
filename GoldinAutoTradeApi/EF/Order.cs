@@ -14,17 +14,11 @@ namespace GoldinAutoTradeApi.EF
     
     public partial class Order
     {
-        public Order()
-        {
-            this.Order_Products = new HashSet<Order_Products>();
-        }
-    
         public int OID { get; set; }
         public Nullable<System.DateTime> OrderDate { get; set; }
         public Nullable<System.DateTime> DeliveryDate { get; set; }
         public Nullable<int> CID { get; set; }
     
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<Order_Products> Order_Products { get; set; }
     }
 }
