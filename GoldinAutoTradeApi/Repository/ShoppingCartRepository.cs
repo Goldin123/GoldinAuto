@@ -88,13 +88,13 @@ namespace GoldinAutoTradeApi.Repository
             }
         }
 
-        void IShoppingCartRepository.RemoveCartItem(int PID)
+        void IShoppingCartRepository.RemoveCartItem(int PID,int CID)
         {
             try
             {
                 using (var context = new EF.GoldinAutoEntities())
                 {
-                    var cartItem = context.ShoppingCarts.Where(a=>a.PID == PID).FirstOrDefault();
+                    var cartItem = context.ShoppingCarts.Where(a=>a.PID == PID  && a.CID==CID).FirstOrDefault();
                     if(cartItem != null) 
                     {
                         context.ShoppingCarts.Remove(cartItem);

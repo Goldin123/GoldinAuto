@@ -28,9 +28,9 @@ namespace GoldinAutoTradeApi.EF
         public DbSet<ApiUser> ApiUsers { get; set; }
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Order> Orders { get; set; }
-        public DbSet<Order_Products> Order_Products { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order_Product> Order_Product { get; set; }
     }
 }

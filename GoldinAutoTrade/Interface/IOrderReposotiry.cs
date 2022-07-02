@@ -9,7 +9,7 @@ namespace GoldinAutoTrade.Interface
 {
     internal interface IOrderReposotiry
     {
-        Task<Tuple<Order>> AddOrder(int CID);
+        Task<Tuple<Order>> AddOrder(Order order);
         Task<Tuple<OrderProducts>> AddOrderProducts(OrderProducts orderProduct);
         Task<Tuple<List<OrderHistory>>> GetOrderHistory();
 

@@ -16,12 +16,12 @@ namespace GoldinAutoTradeApi.Controllers
         IOrderRepository orderRepository = new OrderRepository();
         [Route("api/Order/AddOrder")]
         [HttpPost]
-        public IHttpActionResult AddOrder(int CID)
+        public IHttpActionResult AddOrder(Order order)
         {
             try
             {
-                var order = orderRepository.AddOrder(CID);
-                return Ok(order);
+                var newOrder = orderRepository.AddOrder(order.CID);
+                return Ok(newOrder);
             }
             catch (Exception ex)
             {

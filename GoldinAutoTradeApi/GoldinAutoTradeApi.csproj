@@ -190,7 +190,7 @@
     <Compile Include="EF\Order.cs">
       <DependentUpon>GoldinAutoDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\Order_Products.cs">
+    <Compile Include="EF\Order_Product.cs">
       <DependentUpon>GoldinAutoDB.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Product.cs">

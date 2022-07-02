@@ -20,6 +20,7 @@ namespace GlodinAutoTradeModel.Models
         public int OID { get; set; }
         public int PID { get; set; }
         public int Quatity { get; set; }
+        public int CID { get; set; }
         public decimal TotalPrice { get; set; }
     }
     public class OrderHistory 

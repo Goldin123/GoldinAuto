@@ -49,7 +49,7 @@ namespace GoldinAutoTradeApi.Repository
             {
                 using (var context = new EF.GoldinAutoEntities())
                 {
-                    var order = new EF.Order_Products
+                    var order = new EF.Order_Product
                     {
                        OID = orderedProduct.OID,
                        PID = orderedProduct.PID,
@@ -57,16 +57,16 @@ namespace GoldinAutoTradeApi.Repository
                        TotalPrice = orderedProduct.TotalPrice,
                     };
 
-                    context.Order_Products.Add(order);
+                    context.Order_Product.Add(order);
                     context.SaveChanges();
 
                     IShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
-                    shoppingCartRepository.RemoveCartItem(orderedProduct.PID);
+                    shoppingCartRepository.RemoveCartItem(orderedProduct.PID,orderedProduct.CID);
                     
                     return new OrderProducts
                     {
-                       OID = order.OID,
-                       PID = order.PID,
+                       OID = (int)order.OID,
+                       PID = (int)order.PID,
                        OPID = order.OPID,
                        Quatity = (int)order.Quantity,
                        TotalPrice = (decimal)order.TotalPrice
@@ -86,14 +86,16 @@ namespace GoldinAutoTradeApi.Repository
             {
                 using (var context = new EF.GoldinAutoEntities())
                 {
-                    return (from a in context.Order_Products
+                    return (from a in context.Order_Product
+                            join b in context.Orders on a.OID equals b.OID
+                            join c in context.Products on a.PID equals c.PID
                             select new OrderHistory
                             {
-                                DeliveryDate = (DateTime)a.Order.DeliveryDate,
-                                OID = a.OID,
-                                PID = a.PID,
-                                OrderDate = (DateTime)a.Order.OrderDate,
-                                ProductName = a.Product.ProductName,
+                                DeliveryDate = (DateTime)b.DeliveryDate,
+                                OID = b.OID,
+                                PID = c.PID,
+                                OrderDate = (DateTime)b.OrderDate,
+                                ProductName = c.ProductName,
                                 Quantity = (int)a.Quantity,
                                 TotalPrice = (decimal)a.TotalPrice
 
