@@ -83,7 +83,7 @@
                                                     <a class="btn btn-secondary" onclick="Change(this, 1, @item.PID)">+</a>
                                                     <span class="p-name">@item.Quantity</span>
                                                     <a class="btn btn-secondary" onclick="Change(this, 0,  @item.PID)">-</a>
-                                                    <a class="btn btn-warning" onclick="Change(this, -1,  @item.PID)">Remove</a>
+                                                    <a class="btn btn-warning" onclick="Change(this, -1,  @item.PID)"><i class="fas fa-trash"></i></a>
                                                 </td>
                                                 <td>@item.ProductName</td>
                                                 <td>@item.UnitPrice</td>
@@ -158,22 +158,7 @@
         </div><!-- /.row -->
     </div><!-- /.container-fluid -->
 </section>
-<script>
-    function UpdateTotalPrice() {
-        $.ajax({
-            type: 'GET',
-            url: "Shopping/UpdateTotal",
-            contentType: "application/json; charset=utf-8",
-            success: function (msg) {
-                if (msg.d == "$0.00") {
-                    location.reload();
-                    return;
-                }
-
-                $('#totalPrice').text(msg.d);
-            }
-        })
-    }
+<script>  
 
     function Change(el, type, pid) {
         var data = {
@@ -186,13 +171,8 @@
             data: "{ 'type': " + type + ", 'pId': " + pid + "}",
             contentType: "application/json; charset=utf-8",
             success: function (msg) {
-                if (msg.d == 0) {
-                    //el.parentNode.parentNode.remove();
-                } else {
-                    //$(el).siblings('span')[0].innerHTML = msg.d
-
-                }
-                //UpdateTotalPrice()
+               
+                location.reload();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 debugger;
