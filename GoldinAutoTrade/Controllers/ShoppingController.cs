@@ -23,7 +23,11 @@ namespace GoldinAutoTrade.Controllers
         {
             var shoppingItems = await shoppingCartRepository.GetShoppingCart(Globals.CID);
             if (shoppingItems.Item1 != null)
+            {
+                Globals.ShoppingCartItems = shoppingItems.Item1.Count();
                 return View(shoppingItems.Item1);
+            }
+
 
             return View(new List<ShoppingCart>());
         }
@@ -84,42 +88,27 @@ namespace GoldinAutoTrade.Controllers
             var product = await shoppingCartRepository.GetProductInBag(pId);
             if (product.Item1 == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "Shopping");
             }
             ShoppingCart shoppingCartProduct = new ShoppingCart();
             shoppingCartProduct = product.Item1;          
             
             switch (type)
             {
-                case 0: //increase
-                    await shoppingCartRepository.IncreaseShoppingCartProductItem(shoppingCartProduct);
-                    break;
-                case 1://decrease
+                case 0: //decrease
                     await shoppingCartRepository.DecreaseShoppingCartProductItem(shoppingCartProduct);
+                    break;
+                case 1://increase
+                    await shoppingCartRepository.IncreaseShoppingCartProductItem(shoppingCartProduct);
                     break;
                 case -1://remove
                     await shoppingCartRepository.RemoveShoppingCartProductItem(shoppingCartProduct);
                     break;
                 default:
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Index", "Shopping");
             }
 
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public async Task<JsonResult> UpdateTotal()
-        {
-            decimal total;
-            try
-            {
-                var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
-
-                total = (decimal)getShoppingCart.Item1.Select(p => p.UnitPrice * p.Quantity).Sum();
-            }
-            catch (Exception) { total = 0; }
-
-            return Json(new { d = String.Format("{0:c}", total) }, JsonRequestBehavior.AllowGet);
+            return RedirectToAction("Index","Shopping");
         }
 
         [Authorize]
