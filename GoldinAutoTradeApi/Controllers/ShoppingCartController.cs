@@ -18,108 +18,40 @@ namespace GoldinAutoTradeApi.Controllers
         [Route("api/ShoppingCart/GetShoppingCart")]
         [HttpGet]
         public IHttpActionResult GetShoppingCart(int CID)
-        {
-            try
-            {
-                var shoppingCarts = shoppingCartRepository.GetShoppingCart(CID);
-                return Ok(shoppingCarts);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            =>Ok(shoppingCartRepository.GetShoppingCart(CID));
+
 
         [Route("api/ShoppingCart/AddShoppingCard")]
         [HttpPost]
         public IHttpActionResult AddShoppingCard(ShoppingCart shoppingCart)
-        {
-            try
-            {
-                var shopping = shoppingCartRepository.AddToCart(shoppingCart);
-                return Ok(shopping);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(shoppingCartRepository.AddToCart(shoppingCart));
 
         [Route("api/ShoppingCart/UpdateCart")]
         [HttpPost]
         public IHttpActionResult UpdateCart(ShoppingCart shoppingCart)
-        {
-            try
-            {
-                var shopping = shoppingCartRepository.UpdateCart(shoppingCart);
-                return Ok(shopping);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(shoppingCartRepository.UpdateCart(shoppingCart));
 
         [Route("api/ShoppingCart/GetShoppingCartProduct")]
         [HttpGet]
         public IHttpActionResult GetShoppingCartProduct(int CID, int PID)
-        {
-            try
-            {
-                var productInBag = shoppingCartRepository.GetShoppingCartProduct(CID,PID);
-                return Ok(productInBag);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            =>Ok(shoppingCartRepository.GetShoppingCartProduct(CID, PID));
 
         [Route("api/ShoppingCart/IncreaseShoppingCartProductItem")]
         [HttpPost]
         public IHttpActionResult IncreaseShoppingCartProductItem(ShoppingCart shoppingCart)
-        {
-            try
-            {
-                var shopping = shoppingCartRepository.IncreaseShoppingCartProduct(shoppingCart);
-                return Ok(shopping);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-        
+            => Ok(shoppingCartRepository.IncreaseShoppingCartProduct(shoppingCart));
+
+
         [Route("api/ShoppingCart/DecreaseShoppingCartProductItem")]
         [HttpPost]
         public IHttpActionResult DecreaseShoppingCartProductItem(ShoppingCart shoppingCart)
-        {
-            try
-            {
-                var shopping = shoppingCartRepository.DecreaseShoppingCartProduct(shoppingCart);
-                return Ok(shopping);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(shoppingCartRepository.DecreaseShoppingCartProduct(shoppingCart));
+
 
         [Route("api/ShoppingCart/RemoveShoppingCartProductItem")]
         [HttpPost]
         public IHttpActionResult RemoveShoppingCartProductItem(ShoppingCart shoppingCart)
-        {
-            try
-            {
-                var shopping = shoppingCartRepository.RemoveShoppingCartProduct(shoppingCart);
-                return Ok(shopping);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
-
+            => Ok(shoppingCartRepository.RemoveShoppingCartProduct(shoppingCart));
 
 
     }
