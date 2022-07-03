@@ -15,16 +15,6 @@ namespace GoldinAutoTradeApi.Controllers
         [Route("api/Supplier/GetSuppliers")]
         [HttpGet]
         public IHttpActionResult GetSuppliers()
-        {
-            try
-            {
-                var suppliers = supplierRepository.GetSuppliers();
-                return Ok(suppliers);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            =>Ok(supplierRepository.GetSuppliers());       
     }
 }
