@@ -58,11 +58,11 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<List<OrderHistory>>> IOrderReposotiry.GetOrderHistory()
+        async Task<Tuple<List<OrderHistory>>> IOrderReposotiry.GetOrderHistory(int CID)
         {
             try
             {
-                HttpResponseMessage response = await client.GetAsync($"api/Order/OrderHistory");
+                HttpResponseMessage response = await client.GetAsync($"api/Order/OrderHistory?CID={CID}");
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();

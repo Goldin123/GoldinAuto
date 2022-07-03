@@ -11,7 +11,7 @@ namespace GoldinAutoTrade.Interface
     {
         Task<Tuple<Order>> AddOrder(Order order);
         Task<Tuple<OrderProducts>> AddOrderProducts(OrderProducts orderProduct);
-        Task<Tuple<List<OrderHistory>>> GetOrderHistory();
+        Task<Tuple<List<OrderHistory>>> GetOrderHistory(int CID);
 
     }
 }

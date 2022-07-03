@@ -27,8 +27,8 @@ namespace GoldinAutoTradeApi.Controllers
 
         [Route("api/Order/OrderHistory")]
         [HttpGet]
-        public IHttpActionResult OrderHistory()
-            => Ok(orderRepository.GetOrderHistory());
+        public IHttpActionResult OrderHistory(int CID)
+            => Ok(orderRepository.GetOrderHistory(CID));
 
     }
 }

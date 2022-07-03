@@ -11,7 +11,6 @@ namespace GoldinAutoTradeApi.Inteface
     {
         Order AddOrder(int CID);
         OrderProducts AddOrderProduct(OrderProducts orderedProduct);
-
-        List<OrderHistory> GetOrderHistory();
+        List<OrderHistory> GetOrderHistory(int CID);
     }
 }

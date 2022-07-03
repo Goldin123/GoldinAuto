@@ -114,7 +114,7 @@ namespace GoldinAutoTrade.Controllers
         [Authorize]
         public async Task<ActionResult> OrderHistory() 
         {
-            var orderHistory = await orderReposotiry.GetOrderHistory();
+            var orderHistory = await orderReposotiry.GetOrderHistory(Globals.CID);
             if (orderHistory != null)
                 return View(orderHistory.Item1);
 
