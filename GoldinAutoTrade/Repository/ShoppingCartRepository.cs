@@ -35,9 +35,32 @@ namespace GoldinAutoTrade.Repository
             {
                 return new Tuple<bool>(false);
             }
-        }
+        }       
 
-       async Task<Tuple<ShoppingCart>> IShoppongCartRepository.GetProductInBag(int PID)
+        async Task<Tuple<bool>> IShoppongCartRepository.UpdateCart(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/UpdateCart",
+                        new StringContent(JsonConvert.SerializeObject(shoppingCart), System.Text.Encoding.Unicode, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var products = JsonConvert.DeserializeObject<bool>(content);
+                        return new Tuple<bool>(true);
+                    }
+                }
+                return new Tuple<bool>(false);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<bool>(false);
+            }
+        }       
+
+        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.GetProductInBag(int PID)
         {
             try
             {
@@ -81,27 +104,72 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<bool>> IShoppongCartRepository.UpdateCart(ShoppingCart shoppingCart)
+        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.IncreaseShoppingCartProductItem(ShoppingCart shoppingCart)
         {
             try
             {
-                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/UpdateCart",
+                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/IncreaseShoppingCartProductItem",
                         new StringContent(JsonConvert.SerializeObject(shoppingCart), System.Text.Encoding.Unicode, "application/json"));
                 if (response.IsSuccessStatusCode)
                 {
                     string content = await response.Content.ReadAsStringAsync();
                     if (!string.IsNullOrEmpty(content))
                     {
-                        var products = JsonConvert.DeserializeObject<bool>(content);
-                        return new Tuple<bool>(true);
+                        var shopCartItem = JsonConvert.DeserializeObject<ShoppingCart>(content);
+                        return new Tuple<ShoppingCart>(shopCartItem);
                     }
                 }
-                return new Tuple<bool>(false);
+                return new Tuple<ShoppingCart>(null);
             }
             catch (Exception ex)
             {
-                return new Tuple<bool>(false);
+                return new Tuple<ShoppingCart>(null);
             }
         }
+        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.DecreaseShoppingCartProductItem(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/DecreaseShoppingCartProductItem",
+                        new StringContent(JsonConvert.SerializeObject(shoppingCart), System.Text.Encoding.Unicode, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var shopCartItem = JsonConvert.DeserializeObject<ShoppingCart>(content);
+                        return new Tuple<ShoppingCart>(shopCartItem);
+                    }
+                }
+                return new Tuple<ShoppingCart>(null);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<ShoppingCart>(null);
+            }
+        }
+        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.RemoveShoppingCartProductItem(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync($"api/ShoppingCart/RemoveShoppingCartProductItem",
+                        new StringContent(JsonConvert.SerializeObject(shoppingCart), System.Text.Encoding.Unicode, "application/json"));
+                if (response.IsSuccessStatusCode)
+                {
+                    string content = await response.Content.ReadAsStringAsync();
+                    if (!string.IsNullOrEmpty(content))
+                    {
+                        var shopCartItem = JsonConvert.DeserializeObject<ShoppingCart>(content);
+                        return new Tuple<ShoppingCart>(shopCartItem);
+                    }
+                }
+                return new Tuple<ShoppingCart>(null);
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<ShoppingCart>(null);
+            }
+        }
+
     }
 }

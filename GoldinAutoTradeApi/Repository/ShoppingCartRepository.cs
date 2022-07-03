@@ -108,5 +108,71 @@ namespace GoldinAutoTradeApi.Repository
                 throw ex;
             }
         }
+
+        ShoppingCart IShoppingCartRepository.IncreaseShoppingCartProduct(ShoppingCart shoppingCart)
+        {
+            using (var context = new EF.GoldinAutoEntities())
+            {
+                var shpcart = context.ShoppingCarts.Where(x => x.CID == shoppingCart.CID && x.PID == shoppingCart.PID).FirstOrDefault();
+                if (shpcart != null)
+                {
+                    shpcart.Quantity++;
+                    context.SaveChanges();
+                }
+                var product = context.Products.Where(x => x.PID == shoppingCart.PID).FirstOrDefault();
+
+                if(product != null) 
+                {
+                    product.UnitsInStock--;
+                    context.SaveChanges();
+                }
+
+                return shoppingCart;
+            }
+        }
+
+        ShoppingCart IShoppingCartRepository.DecreaseShoppingCartProduct(ShoppingCart shoppingCart)
+        {
+            using (var context = new EF.GoldinAutoEntities())
+            {
+                var shpcart = context.ShoppingCarts.Where(x => x.CID == shoppingCart.CID && x.PID == shoppingCart.PID).FirstOrDefault();
+                if (shpcart != null)
+                {
+                    shpcart.Quantity--;
+                    context.SaveChanges();
+                }
+                var product = context.Products.Where(x => x.PID == shoppingCart.PID).FirstOrDefault();
+
+                if (product != null)
+                {
+                    product.UnitsInStock++;
+                    context.SaveChanges();
+                }
+
+                return shoppingCart;
+            }
+        }
+
+        ShoppingCart IShoppingCartRepository.RemoveShoppingCartProduct(ShoppingCart shoppingCart)
+        {
+            using (var context = new EF.GoldinAutoEntities())
+            {
+                var shpcart = context.ShoppingCarts.Where(x => x.CID == shoppingCart.CID && x.PID == shoppingCart.PID).FirstOrDefault();
+                if (shpcart != null)
+                {
+                   context.ShoppingCarts.Remove(shpcart);
+                    context.SaveChanges();
+                }
+                var product = context.Products.Where(x => x.PID == shoppingCart.PID).FirstOrDefault();
+
+                if (product != null)
+                {
+                    product.UnitsInStock = product.UnitsInStock + shoppingCart.Quantity;
+                    context.SaveChanges();
+                }
+
+                return shoppingCart;
+            }
+        }
     }
 }

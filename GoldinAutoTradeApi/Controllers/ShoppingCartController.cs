@@ -74,5 +74,53 @@ namespace GoldinAutoTradeApi.Controllers
                 return InternalServerError(ex);
             }
         }
+
+        [Route("api/ShoppingCart/IncreaseShoppingCartProductItem")]
+        [HttpPost]
+        public IHttpActionResult IncreaseShoppingCartProductItem(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                var shopping = shoppingCartRepository.IncreaseShoppingCartProduct(shoppingCart);
+                return Ok(shopping);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+        
+        [Route("api/ShoppingCart/DecreaseShoppingCartProductItem")]
+        [HttpPost]
+        public IHttpActionResult DecreaseShoppingCartProductItem(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                var shopping = shoppingCartRepository.DecreaseShoppingCartProduct(shoppingCart);
+                return Ok(shopping);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+        [Route("api/ShoppingCart/RemoveShoppingCartProductItem")]
+        [HttpPost]
+        public IHttpActionResult RemoveShoppingCartProductItem(ShoppingCart shoppingCart)
+        {
+            try
+            {
+                var shopping = shoppingCartRepository.RemoveShoppingCartProduct(shoppingCart);
+                return Ok(shopping);
+            }
+            catch (Exception ex)
+            {
+                return InternalServerError(ex);
+            }
+        }
+
+
+
     }
 }

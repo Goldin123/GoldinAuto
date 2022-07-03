@@ -78,53 +78,33 @@ namespace GoldinAutoTrade.Controllers
             return RedirectToAction("Index");
         }
 
-        public async Task<JsonResult> QuanityChange(int type, int pId)
+        public async Task<ActionResult> QuanityChange(int type, int pId)
         {
 
             var product = await shoppingCartRepository.GetProductInBag(pId);
             if (product.Item1 == null)
             {
-                return Json(new { d = "0" });
+                return RedirectToAction("Index");
             }
             ShoppingCart shoppingCartProduct = new ShoppingCart();
-            shoppingCartProduct = product.Item1;
-
-            var getProduct  = await productRepository.GetProduct(pId);
-            Product actualProduct = getProduct.Item1;
-
-            int quantity;
-            // if type 0, decrease quantity
-            // if type 1, increase quanity
+            shoppingCartProduct = product.Item1;          
+            
             switch (type)
             {
-                case 0:
-                    shoppingCartProduct.Quantity--;
-                    actualProduct.UnitsInStock++;
+                case 0: //increase
+                    await shoppingCartRepository.IncreaseShoppingCartProductItem(shoppingCartProduct);
                     break;
-                case 1:
-                    shoppingCartProduct.Quantity++;
-                    actualProduct.UnitsInStock--;
+                case 1://decrease
+                    await shoppingCartRepository.DecreaseShoppingCartProductItem(shoppingCartProduct);
                     break;
-                case -1:
-                    actualProduct.UnitsInStock += shoppingCartProduct.Quantity;
-                    shoppingCartProduct.Quantity = 0;
+                case -1://remove
+                    await shoppingCartRepository.RemoveShoppingCartProductItem(shoppingCartProduct);
                     break;
                 default:
-                    return Json(new { d = "0" });
+                    return RedirectToAction("Index");
             }
 
-            if (shoppingCartProduct.Quantity == 0)
-            {
-                //context.ShoppingCartDatas.Remove(product);
-                quantity = 0;
-            }
-            else
-            {
-                quantity = shoppingCartProduct.Quantity;
-            }
-            //context.SaveChanges();
-
-            return Json(new { d = quantity });
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
