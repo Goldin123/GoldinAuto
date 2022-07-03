@@ -18,46 +18,19 @@ namespace GoldinAutoTradeApi.Controllers
         [Route("api/Customer/AddCustomer")]
         [HttpPost]
         public IHttpActionResult AddCustomer(Customer customer)
-        {
-            try
-            {
-                var cust = customerRepository.AddCustomer(customer);
-                return Ok(cust);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(customerRepository.AddCustomer(customer));
+
 
         [Route("api/Customer/EditCustomer")]
         [HttpPost]
         public IHttpActionResult EditCustomer(Customer customer)
-        {
-            try
-            {
-                var cust = customerRepository.EditCustomer(customer);
-                return Ok(cust);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(customerRepository.EditCustomer(customer));
+        
         [Route("api/Customer/GetCustomer")]
         [HttpGet]
         public IHttpActionResult GetCustomer(string email)
-        {
-            try
-            {
-                var cust = customerRepository.GetCustomer(email);
-                return Ok(cust);
-            }
-            catch (Exception ex)
-            {
-                return InternalServerError(ex);
-            }
-        }
+            => Ok(customerRepository.GetCustomer(email));
+       
 
     }
 }

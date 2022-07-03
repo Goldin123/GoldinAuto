@@ -80,7 +80,7 @@ namespace GoldinAutoTradeApi.Repository
             }
         }
 
-        List<OrderHistory> IOrderRepository.GetOrderHistory()
+        List<OrderHistory> IOrderRepository.GetOrderHistory(int CID)
         {
             try
             {
@@ -89,6 +89,7 @@ namespace GoldinAutoTradeApi.Repository
                     return (from a in context.Order_Product
                             join b in context.Orders on a.OID equals b.OID
                             join c in context.Products on a.PID equals c.PID
+                            where b.CID == CID
                             select new OrderHistory
                             {
                                 DeliveryDate = (DateTime)b.DeliveryDate,
