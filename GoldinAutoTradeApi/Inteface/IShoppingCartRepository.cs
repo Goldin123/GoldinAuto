@@ -14,6 +14,10 @@ namespace GoldinAutoTradeApi.Inteface
         ShoppingCart GetShoppingCartProduct(int CID, int PID);
         List<ShoppingCart> GetShoppingCart(int CID);
         void RemoveCartItem(int PID,int CID);
+        ShoppingCart IncreaseShoppingCartProduct(ShoppingCart shoppingCart);
+        ShoppingCart DecreaseShoppingCartProduct(ShoppingCart shoppingCart);
+        ShoppingCart RemoveShoppingCartProduct(ShoppingCart shoppingCart);
+
 
     }
 }

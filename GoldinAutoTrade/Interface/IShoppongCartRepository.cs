@@ -14,6 +14,10 @@ namespace GoldinAutoTrade.Interface
         Task<Tuple<List<ShoppingCart>>> GetShoppingCart(int CID);
         Task<Tuple<bool>> UpdateCart(ShoppingCart shoppingCart);
 
-        
+        Task<Tuple<ShoppingCart>> IncreaseShoppingCartProductItem(ShoppingCart shoppingCart);
+        Task<Tuple<ShoppingCart>> DecreaseShoppingCartProductItem(ShoppingCart shoppingCart);
+        Task<Tuple<ShoppingCart>> RemoveShoppingCartProductItem(ShoppingCart shoppingCart);
+
+
     }
 }
