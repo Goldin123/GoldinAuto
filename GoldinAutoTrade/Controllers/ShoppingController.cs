@@ -12,10 +12,6 @@ namespace GoldinAutoTrade.Controllers
 {
     public class ShoppingController : Controller
     {
-        //ICustomerRepository customerRepository = new CustomerRepository();
-        //IShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
-        //IOrderReposotiry orderReposotiry = new OrderRepository();
-
         readonly ICustomerRepository _customerRepository;
         readonly IShoppingCartRepository _shoppingCartRepository;
         readonly IOrderReposotiry _orderReposotiry;
@@ -47,13 +43,8 @@ namespace GoldinAutoTrade.Controllers
         public async Task<ActionResult> Purchase()
         {
 
-            Customer customer = new Customer();
             Order order = new Order();
             order.CID = Globals.CID;
-            List<ShoppingCart> shoppingCartItems = new List<ShoppingCart>();
-            var getCustomer = await _customerRepository.GetCustomer(Globals.Email);
-            if (getCustomer.Item1 != null)
-                customer = getCustomer.Item1;
 
             var addOrder = await _orderReposotiry.AddOrder(order);
 
@@ -64,7 +55,7 @@ namespace GoldinAutoTrade.Controllers
 
             if (getShoppingCart.Item1 != null)
             {
-                shoppingCartItems = getShoppingCart.Item1;
+                List<ShoppingCart> shoppingCartItems =  getShoppingCart.Item1;
                 if (shoppingCartItems != null)
                 {
                     if (shoppingCartItems.Count > 0)
@@ -79,7 +70,7 @@ namespace GoldinAutoTrade.Controllers
                                 Quatity = shoppingCartItem.Quantity,
                                 TotalPrice = (decimal)(shoppingCartItem.UnitPrice * shoppingCartItem.Quantity)
                             };
-                            var addOrderProduct = await _orderReposotiry.AddOrderProducts(orderedProduct);
+                            await _orderReposotiry.AddOrderProducts(orderedProduct);
 
                         }
                     }

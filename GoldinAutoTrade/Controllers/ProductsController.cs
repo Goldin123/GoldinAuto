@@ -12,10 +12,7 @@ namespace GoldinAutoTrade.Controllers
 {
     public class ProductsController : Controller
     {
-        //IProductRepository productRepository = new ProductRepository();
-        //IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
-        //ISupplierRepository supplierRepository = new SupplierRepository();
-
+       
         readonly IProductRepository _productRepository;
         readonly IShoppingCartRepository _shoppingCartRepository;
         readonly ISupplierRepository _supplierRepository;
