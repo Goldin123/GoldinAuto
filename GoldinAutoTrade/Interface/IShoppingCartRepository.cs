@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTrade.Interface
 {
-    internal interface IShoppongCartRepository
+    public interface IShoppingCartRepository
     {
         Task<Tuple<bool>> AddToCart(ShoppingCart shoppingCart);
         Task<Tuple<ShoppingCart>> GetProductInBag(int PID);

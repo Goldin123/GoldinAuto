@@ -12,14 +12,28 @@ namespace GoldinAutoTrade.Controllers
 {
     public class ProductsController : Controller
     {
-        IProductRepository productRepository = new ProductRepository();
-        IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
-        ISupplierRepository supplierRepository = new SupplierRepository();
+        //IProductRepository productRepository = new ProductRepository();
+        //IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
+        //ISupplierRepository supplierRepository = new SupplierRepository();
+
+        readonly IProductRepository _productRepository;
+        readonly IShoppingCartRepository _shoppingCartRepository;
+        readonly ISupplierRepository _supplierRepository;
+
+        public ProductsController(IProductRepository productRepository,
+                                  IShoppingCartRepository shoppongCartRepository,
+                                  ISupplierRepository supplierRepository) 
+        {
+            this._productRepository = productRepository;
+            this._shoppingCartRepository = shoppongCartRepository;
+            this._supplierRepository = supplierRepository;
+        }
+
         // GET: Products
         [Authorize]
         public async Task<ActionResult> Index()
         {
-            var products = await productRepository.GetProducts();
+            var products = await _productRepository.GetProducts();
             if (products != null)
                 if (products.Item2)
                     return View(products.Item1);
@@ -32,18 +46,18 @@ namespace GoldinAutoTrade.Controllers
         {
             int id = Convert.ToInt32(ID);
             var cart = new ShoppingCart();
-            var getProduct = await productRepository.GetProduct(id);
+            var getProduct = await _productRepository.GetProduct(id);
             var success = false;
             if (getProduct != null)
             {
                 Product product = getProduct.Item1;
                 if (product != null && product.UnitsInStock > 0)
                 {
-                    var getProductInBag = await shoppingCartRepository.GetProductInBag(id);
+                    var getProductInBag = await _shoppingCartRepository.GetProductInBag(id);
                     if (getProductInBag.Item1 != null)
                     {
                         cart = getProductInBag.Item1;
-                        await shoppingCartRepository.UpdateCart(cart);
+                        await _shoppingCartRepository.UpdateCart(cart);
                         success = true;
                     }
                     else
@@ -53,19 +67,19 @@ namespace GoldinAutoTrade.Controllers
                         cart.UnitPrice = (double)product.UnitPrice;
                         cart.Quantity = 1;
                         cart.CID = Globals.CID;
-                        await shoppingCartRepository.AddToCart(cart);
+                        await _shoppingCartRepository.AddToCart(cart);
                         success = true;
                     }
 
 
                     if (success)
                     {
-                        var shoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+                        var shoppingCart = await _shoppingCartRepository.GetShoppingCart(Globals.CID);
 
                         if (shoppingCart.Item1 != null)
                             Globals.ShoppingCartItems = shoppingCart.Item1.Count();
 
-                        await productRepository.UpdateProductInStock(id);
+                        await _productRepository.UpdateProductInStock(id);
                         TempData["CartAdded"] = $"1 {product.ProductName} added to cart.";
                     }
 
@@ -79,7 +93,7 @@ namespace GoldinAutoTrade.Controllers
         [Authorize]
         public async Task<ActionResult> AddProduct()
         {
-            var getSuppliers = await supplierRepository.GetSuppliers();
+            var getSuppliers = await _supplierRepository.GetSuppliers();
             if (getSuppliers.Item1 != null)
             {
                 List<SelectListItem> options = new List<SelectListItem>();
@@ -107,10 +121,10 @@ namespace GoldinAutoTrade.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var result =  await productRepository.AddProduct(product);
+                var result =  await _productRepository.AddProduct(product);
                 if (result.Item1)
                 {
-                    var products = await productRepository.GetProducts();
+                    var products = await _productRepository.GetProducts();
                     if (products.Item1 != null)
                         Globals.TotalProducts = products.Item1.Count();
 
