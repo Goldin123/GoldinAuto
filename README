@@ -1,3 +1,5 @@
 Please create a localDB called 'GoldinAuto' on your 'App_Data" api project.
 Then run the text file called 'Run Me First' into the localDB
+Varify you can connect to the localDB and connection string on Api webcofig is your localDB
+Make sure both Website and API are running
 Enjoy!!!
