@@ -13,7 +13,7 @@ namespace GoldinAutoTrade.Repository
     public class CustomerRepository : ICustomerRepository
     {
         private readonly HttpClient client = Helper.ApiHttpClient.GetApiClient();
-        IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
+        IShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
         IProductRepository productRepository = new ProductRepository();
         async Task<Tuple<Customer>> ICustomerRepository.AddCustomer(Customer customer)
         {

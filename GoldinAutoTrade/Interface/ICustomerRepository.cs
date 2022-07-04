@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTrade.Interface
 {
-    internal interface ICustomerRepository
+    public interface ICustomerRepository
     {
         Task<Tuple<Customer>> AddCustomer(Customer customer);
         Task<Tuple<Customer>> EditCustomer(Customer customer);

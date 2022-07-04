@@ -12,11 +12,18 @@ namespace GoldinAutoTrade.Controllers
 {
     public class CustomerController : Controller
     {
-        ICustomerRepository customerRepository = new CustomerRepository();
+        readonly ICustomerRepository _customerRepository;
+
         // GET: Customer
+
+        public CustomerController(ICustomerRepository customerRepository)
+        {
+            this._customerRepository = customerRepository;
+        }
+
         public async Task<ActionResult> Index()
         {
-            var customer = await customerRepository.GetCustomer(Globals.Email);
+            var customer = await _customerRepository.GetCustomer(Globals.Email);
             if (customer.Item1 != null)
                 return View(customer.Item1);
             else
@@ -31,7 +38,7 @@ namespace GoldinAutoTrade.Controllers
         {
             if (ModelState.IsValid) 
             {
-                await customerRepository.EditCustomer(customer);
+                await _customerRepository.EditCustomer(customer);
             }
             return RedirectToAction("Index", "Customer");
         }

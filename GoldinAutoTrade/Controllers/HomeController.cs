@@ -12,12 +12,17 @@ namespace GoldinAutoTrade.Controllers
 {
     public class HomeController : Controller
     {
-        ICustomerRepository customerRepository = new CustomerRepository();
+        readonly ICustomerRepository _customerRepository;
+        public HomeController(ICustomerRepository customerRepository) 
+        {
+            this._customerRepository = customerRepository;
+        }
+
         [Authorize]
         public async Task<ActionResult> Index()
         {
             var userClaims = User.Identity as System.Security.Claims.ClaimsIdentity;
-            await customerRepository.SetGlobalVariable(userClaims);
+            await _customerRepository.SetGlobalVariable(userClaims);
             ViewBag.Name = Globals.Name;
             ViewBag.Username = Globals.Email;
             ViewBag.Subject = Globals.Subject;

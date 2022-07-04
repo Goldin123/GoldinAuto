@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTrade.Interface
 {
-    internal interface IProductRepository
+    public interface IProductRepository
     {
         Task<Tuple<List<Product>, bool>> GetProducts();
 

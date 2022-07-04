@@ -10,11 +10,11 @@ using System.Web;
 
 namespace GoldinAutoTrade.Repository
 {
-    public class ShoppingCartRepository : IShoppongCartRepository
+    public class ShoppingCartRepository : IShoppingCartRepository
     {
         private readonly HttpClient client = Helper.ApiHttpClient.GetApiClient();
 
-        async Task<Tuple<bool>> IShoppongCartRepository.AddToCart(ShoppingCart shoppingCart)
+        async Task<Tuple<bool>> IShoppingCartRepository.AddToCart(ShoppingCart shoppingCart)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace GoldinAutoTrade.Repository
             }
         }       
 
-        async Task<Tuple<bool>> IShoppongCartRepository.UpdateCart(ShoppingCart shoppingCart)
+        async Task<Tuple<bool>> IShoppingCartRepository.UpdateCart(ShoppingCart shoppingCart)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace GoldinAutoTrade.Repository
             }
         }       
 
-        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.GetProductInBag(int PID)
+        async Task<Tuple<ShoppingCart>> IShoppingCartRepository.GetProductInBag(int PID)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<List<ShoppingCart>>> IShoppongCartRepository.GetShoppingCart(int CID)
+        async Task<Tuple<List<ShoppingCart>>> IShoppingCartRepository.GetShoppingCart(int CID)
         {
             try
             {
@@ -104,7 +104,7 @@ namespace GoldinAutoTrade.Repository
             }
         }
 
-        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.IncreaseShoppingCartProductItem(ShoppingCart shoppingCart)
+        async Task<Tuple<ShoppingCart>> IShoppingCartRepository.IncreaseShoppingCartProductItem(ShoppingCart shoppingCart)
         {
             try
             {
@@ -126,7 +126,7 @@ namespace GoldinAutoTrade.Repository
                 return new Tuple<ShoppingCart>(null);
             }
         }
-        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.DecreaseShoppingCartProductItem(ShoppingCart shoppingCart)
+        async Task<Tuple<ShoppingCart>> IShoppingCartRepository.DecreaseShoppingCartProductItem(ShoppingCart shoppingCart)
         {
             try
             {
@@ -148,7 +148,7 @@ namespace GoldinAutoTrade.Repository
                 return new Tuple<ShoppingCart>(null);
             }
         }
-        async Task<Tuple<ShoppingCart>> IShoppongCartRepository.RemoveShoppingCartProductItem(ShoppingCart shoppingCart)
+        async Task<Tuple<ShoppingCart>> IShoppingCartRepository.RemoveShoppingCartProductItem(ShoppingCart shoppingCart)
         {
             try
             {

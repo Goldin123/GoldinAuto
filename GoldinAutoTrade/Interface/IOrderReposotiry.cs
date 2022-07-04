@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GoldinAutoTrade.Interface
 {
-    internal interface IOrderReposotiry
+    public interface IOrderReposotiry
     {
         Task<Tuple<Order>> AddOrder(Order order);
         Task<Tuple<OrderProducts>> AddOrderProducts(OrderProducts orderProduct);

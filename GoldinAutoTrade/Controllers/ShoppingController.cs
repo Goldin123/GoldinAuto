@@ -12,16 +12,27 @@ namespace GoldinAutoTrade.Controllers
 {
     public class ShoppingController : Controller
     {
-        ICustomerRepository customerRepository = new CustomerRepository();
-        IShoppongCartRepository shoppingCartRepository = new ShoppingCartRepository();
-        IOrderReposotiry orderReposotiry = new OrderRepository();
-        IProductRepository productRepository = new ProductRepository();
+        //ICustomerRepository customerRepository = new CustomerRepository();
+        //IShoppingCartRepository shoppingCartRepository = new ShoppingCartRepository();
+        //IOrderReposotiry orderReposotiry = new OrderRepository();
+
+        readonly ICustomerRepository _customerRepository;
+        readonly IShoppingCartRepository _shoppingCartRepository;
+        readonly IOrderReposotiry _orderReposotiry;
+
+        public ShoppingController(ICustomerRepository customerRepository, IShoppingCartRepository shoppingCartRepository, IOrderReposotiry orderReposotiry)
+        {
+            this._customerRepository = customerRepository;
+            this._shoppingCartRepository = shoppingCartRepository;
+            this._orderReposotiry = orderReposotiry;
+        }
+
 
         [Authorize]
         // GET: Shopping
         public async Task<ActionResult> Index()
         {
-            var shoppingItems = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+            var shoppingItems = await _shoppingCartRepository.GetShoppingCart(Globals.CID);
             if (shoppingItems.Item1 != null)
             {
                 Globals.ShoppingCartItems = shoppingItems.Item1.Count();
@@ -40,16 +51,16 @@ namespace GoldinAutoTrade.Controllers
             Order order = new Order();
             order.CID = Globals.CID;
             List<ShoppingCart> shoppingCartItems = new List<ShoppingCart>();
-            var getCustomer = await customerRepository.GetCustomer(Globals.Email);
+            var getCustomer = await _customerRepository.GetCustomer(Globals.Email);
             if (getCustomer.Item1 != null)
                 customer = getCustomer.Item1;
 
-            var addOrder = await orderReposotiry.AddOrder(order);
+            var addOrder = await _orderReposotiry.AddOrder(order);
 
             if (addOrder.Item1 != null)
                 order = addOrder.Item1;
 
-            var getShoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+            var getShoppingCart = await _shoppingCartRepository.GetShoppingCart(Globals.CID);
 
             if (getShoppingCart.Item1 != null)
             {
@@ -68,12 +79,12 @@ namespace GoldinAutoTrade.Controllers
                                 Quatity = shoppingCartItem.Quantity,
                                 TotalPrice = (decimal)(shoppingCartItem.UnitPrice * shoppingCartItem.Quantity)
                             };
-                            var addOrderProduct = await orderReposotiry.AddOrderProducts(orderedProduct);
+                            var addOrderProduct = await _orderReposotiry.AddOrderProducts(orderedProduct);
 
                         }
                     }
                 }
-                var shoppingCart = await shoppingCartRepository.GetShoppingCart(Globals.CID);
+                var shoppingCart = await _shoppingCartRepository.GetShoppingCart(Globals.CID);
                 if (shoppingCart.Item1 != null)
                     Globals.ShoppingCartItems = shoppingCart.Item1.Count();
                 TempData["PaymentStatus"] = "Payment seccessfully processed.";
@@ -85,7 +96,7 @@ namespace GoldinAutoTrade.Controllers
         public async Task<ActionResult> QuanityChange(int type, int pId)
         {
 
-            var product = await shoppingCartRepository.GetProductInBag(pId);
+            var product = await _shoppingCartRepository.GetProductInBag(pId);
             if (product.Item1 == null)
             {
                 return RedirectToAction("Index", "Shopping");
@@ -96,13 +107,13 @@ namespace GoldinAutoTrade.Controllers
             switch (type)
             {
                 case 0: //decrease
-                    await shoppingCartRepository.DecreaseShoppingCartProductItem(shoppingCartProduct);
+                    await _shoppingCartRepository.DecreaseShoppingCartProductItem(shoppingCartProduct);
                     break;
                 case 1://increase
-                    await shoppingCartRepository.IncreaseShoppingCartProductItem(shoppingCartProduct);
+                    await _shoppingCartRepository.IncreaseShoppingCartProductItem(shoppingCartProduct);
                     break;
                 case -1://remove
-                    await shoppingCartRepository.RemoveShoppingCartProductItem(shoppingCartProduct);
+                    await _shoppingCartRepository.RemoveShoppingCartProductItem(shoppingCartProduct);
                     break;
                 default:
                     return RedirectToAction("Index", "Shopping");
@@ -114,7 +125,7 @@ namespace GoldinAutoTrade.Controllers
         [Authorize]
         public async Task<ActionResult> OrderHistory() 
         {
-            var orderHistory = await orderReposotiry.GetOrderHistory(Globals.CID);
+            var orderHistory = await _orderReposotiry.GetOrderHistory(Globals.CID);
             if (orderHistory != null)
                 return View(orderHistory.Item1);
 
