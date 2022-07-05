@@ -100,8 +100,13 @@ namespace GoldinAutoTrade.Repository
             Globals.Subject = claims?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
             Globals.TenantId = claims?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid")?.Value;
             var names = Globals.Name.Split(' ');
-            Globals.Firstname = names[0];
-            Globals.Lastname = names[1];
+            if (names != null)
+            {
+                if (names[0] != null)
+                    Globals.Firstname = names[0];
+                if (names[1] != null)
+                    Globals.Lastname = names[1];
+            }
             var getCustomerDetails = await GetCustomer(Globals.Email);
             if (getCustomerDetails.Item1 != null)
                 Globals.CID = getCustomerDetails.Item1.CID;
@@ -124,7 +129,7 @@ namespace GoldinAutoTrade.Repository
                 Globals.ShoppingCartItems = shoppingCart.Item1.Count();
 
             var products = await productRepository.GetProducts();
-            if(products.Item1 !=null)
+            if (products.Item1 != null)
                 Globals.TotalProducts = products.Item1.Count();
 
             return new Tuple<bool>(true);
