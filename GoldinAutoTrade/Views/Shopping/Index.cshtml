@@ -3,7 +3,14 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Internal.cshtml";
 }
-
+<style>
+    .isDisabled {
+        color: currentColor;
+        cursor: not-allowed;
+        opacity: 0.5;
+        text-decoration: none;
+    }
+</style>
 <h2>Shopping Cart</h2>
 <section class="content">
     <div class="container-fluid">
@@ -80,9 +87,23 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <a class="btn btn-secondary" onclick="Change(this, 1, @item.PID)">+</a>
+                                                    @if (item.ProductsAvailable == item.Quantity)
+                                                    {
+                                                        <a class="btn btn-secondary isDisabled">+</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-secondary" onclick="Change(this, 1, @item.PID)">+</a>
+                                                    }
                                                     <span class="p-name">@item.Quantity</span>
-                                                    <a class="btn btn-secondary" onclick="Change(this, 0,  @item.PID)">-</a>
+                                                    @if (item.Quantity == 1)
+                                                    {
+                                                        <a class="btn btn-secondary isDisabled" >-</a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="btn btn-secondary" onclick="Change(this, 0,  @item.PID)">-</a>
+                                                    }
                                                     <a class="btn btn-warning" onclick="Change(this, -1,  @item.PID)"><i class="fas fa-trash"></i></a>
                                                 </td>
                                                 <td>@item.ProductName</td>
