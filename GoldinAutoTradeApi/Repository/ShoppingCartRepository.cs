@@ -49,6 +49,7 @@ namespace GoldinAutoTradeApi.Repository
                 using (var context = new EF.GoldinAutoEntities())
                 {
                     return (from a in context.ShoppingCarts
+                            join b in context.Products on a.PID equals b.PID
                             where a.CID == CID
                             select new ShoppingCart
                             {
@@ -57,7 +58,8 @@ namespace GoldinAutoTradeApi.Repository
                                 ProductName = a.ProductName,
                                 Quantity = (int)a.Quantity,
                                 UnitPrice = (double)a.UnitPrice,
-                                SCID = a.SCID
+                                SCID = a.SCID,
+                                ProductsAvailable = (int)b.UnitsInStock
 
                             }).ToList<ShoppingCart>();
                 }

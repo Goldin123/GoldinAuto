@@ -36,30 +36,62 @@
                         <div class="row mt-4">
                             @foreach (var item in Model)
                             {
-                                <div class="col-sm-4">
-                                    <div class="position-relative">
-                                        <img src="@item.ConvertedImage" alt="Photo 1" width="250px" height="200px" class="img-fluid">
-                                        <div class="ribbon-wrapper ribbon-lg">
-                                            <div class="ribbon bg-success text-lg">
-                                                @String.Format("{0:c}", item.UnitPrice)
+                                if (item.UnitsInStock > 0)
+                                {
+
+                                    <div class="col-sm-4">
+                                        <div class="position-relative">
+                                            <img src="@item.ConvertedImage" alt="Photo 1" width="250px" height="200px" class="img-fluid">
+                                            <div class="ribbon-wrapper ribbon-lg">
+                                                <div class="ribbon bg-success text-lg">
+                                                    @String.Format("{0:c}", item.UnitPrice)
+                                                </div>
+                                            </div>
+                                        </div><br />
+
+                                        <div class="info-box bg-info">
+                                            <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text"><strong> @item.ProductName</strong></span>
+                                                <span class="info-box-text">@item.Description</span>
+                                                <span class="info-box-number">@item.UnitsInStock in Stock</span>
+                                                <span class="progress-description">
+                                                    @String.Format("{0:c}", item.UnitPrice) each*
+                                                </span>
+                                            </div>
+                                            @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { ID = item.PID }, new { @class = "btn btn-warning", @style = "align-self: center;" })
+                                        </div>
+
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="col-sm-4">
+                                        <div class="position-relative">
+                                            <img src="@item.ConvertedImage" alt="Photo 1" width="250px" height="200px" class="img-fluid">
+                                            <div class="ribbon-wrapper ribbon-lg">
+                                                <div class="ribbon bg-danger text-lg">
+                                                    SOLD OUT
+                                                </div>
+                                            </div>
+                                        </div><br />
+
+                                        <div class="info-box bg-info">
+                                            <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
+                                            <div class="info-box-content">
+                                                <span class="info-box-text"><strong> @item.ProductName</strong></span>
+                                                <span class="info-box-text">@item.Description</span>
+                                                <span class="info-box-number">@item.UnitsInStock in Stock</span>
+                                                <span class="progress-description">
+                                                    @String.Format("{0:c}", item.UnitPrice) each*
+                                                </span>
                                             </div>
                                         </div>
-                                    </div><br />
 
-                                    <div class="info-box bg-info">
-                                        <span class="info-box-icon"><i class="fas fa-shopping-cart"></i></span>
-                                        <div class="info-box-content">
-                                            <span class="info-box-text"><strong> @item.ProductName</strong></span>
-                                            <span class="info-box-text">@item.Description</span>
-                                            <span class="info-box-number">@item.UnitsInStock in Stock</span>
-                                            <span class="progress-description">
-                                                @String.Format("{0:c}", item.UnitPrice) each*
-                                            </span>
-                                        </div>
-                                        @Html.ActionLink("Add To Cart", "AddToCart", "Products", new { ID = item.PID }, new { @class = "btn btn-warning", @style = "align-self: center;" })
                                     </div>
 
-                                </div>
+                                }
+
                             }
 
                         </div>
